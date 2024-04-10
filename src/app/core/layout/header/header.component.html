@@ -1,0 +1,21 @@
+<p-menubar [model]="items" styleClass="white-menubar">
+  <ng-template pTemplate="start">
+    <a [routerLink]="['/']">
+      <img
+        src="../../../../assets/img/logo.jpg"
+        height="40"
+        class="mr-2"
+      />
+    </a>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div class="flex">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-user"
+        class="p-button-rounded ml-2"
+      ></button>
+    </div>
+  </ng-template>
+</p-menubar>
