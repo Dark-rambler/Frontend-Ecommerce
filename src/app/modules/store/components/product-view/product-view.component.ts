@@ -9,30 +9,30 @@ import { InventoryStatus } from 'src/app/core/enums/InventoryStatus';
   styleUrls: ['./product-view.component.scss']
 })
 export class ProductViewComponent {
-  public products : Product[] = [];
+  public products: Product[] = [];
   public InventoryStatus = InventoryStatus;
 
-   constructor(public productViewService: ProductViewService) {}
+  constructor(public productViewService: ProductViewService) { }
   ngOnInit(): void {
     this.productViewService.findAll().subscribe((products) => (this.products = products))
   }
 
-  getSeverity (product: Product) {
+  getSeverity(product: Product) {
     switch (product.inventoryStatus) {
-        case InventoryStatus.INSTOCK:
-            return "success";
+      case InventoryStatus.INSTOCK:
+        return "success";
 
-        case InventoryStatus.LOWSTOCK:
-            return "warning";
+      case InventoryStatus.LOWSTOCK:
+        return "warning";
 
-        case InventoryStatus.OUTOFSTOCK:
-            return "danger";
+      case InventoryStatus.OUTOFSTOCK:
+        return "danger";
 
-        default:
-          console.log(product.inventoryStatus);
+      default:
+        console.log(product.inventoryStatus);
 
-            return "success";
+        return "success";
     }
-};
+  };
 
 }

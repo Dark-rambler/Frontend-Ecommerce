@@ -20,10 +20,6 @@ export class HeaderComponent implements OnInit {
     this.items = this.menuItems;
   }
 
-  // public isDevelopmentEnvironment(): boolean {
-  //   return !environment.production;
-  // }
-
   public onLogoClick() {
     this.router.navigate(['/home']);
   }
