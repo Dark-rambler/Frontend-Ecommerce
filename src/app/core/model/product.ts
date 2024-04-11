@@ -1,3 +1,4 @@
+import { InventoryStatus } from "../enums/InventoryStatus";
 import { Base } from "./base";
 
 export class Product extends Base{
@@ -8,4 +9,5 @@ export class Product extends Base{
     imageUrl: string = '';
     categoryId: number = 0;
     stock: number = 0;
+    inventoryStatus: InventoryStatus = InventoryStatus.INSTOCK;
 }

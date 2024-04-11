@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataViewModule } from 'primeng/dataview';
 import { RatingModule } from 'primeng/rating';
 import { CardModule } from 'primeng/card';
+import { TagModule } from 'primeng/tag';
 
 @NgModule({
   exports: [
@@ -16,6 +17,7 @@ import { CardModule } from 'primeng/card';
     DataViewModule,
     RatingModule,
     CardModule,
+    TagModule,
   ],
 
 })
