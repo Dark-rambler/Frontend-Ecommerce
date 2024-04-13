@@ -4,18 +4,24 @@ import { CommonModule } from '@angular/common';
 import { StoreMannagerRoutingModule } from './store-mannager-routing.module';
 import { PrimeModule } from 'src/app/prime.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { TableComponent } from './components/table/table.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    ToolbarComponent
+    ToolbarComponent,
+    TableComponent
   ],
   exports: [
-    ToolbarComponent
+    ToolbarComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,
     StoreMannagerRoutingModule,
-    PrimeModule
+    PrimeModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class StoreMannagerModule { }
