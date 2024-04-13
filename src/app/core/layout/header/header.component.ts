@@ -12,7 +12,7 @@ import { PrimeModule } from 'src/app/prime.module';
 })
 export class HeaderComponent implements OnInit {
   public items: any;
-  private menuItems: Object = [];
+  private menuItems: Object = [ { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: '/home' }, { label: 'Store', icon: 'pi pi-fw pi-shopping-cart', routerLink: '/store' }, { label: 'Store Mannager', icon: 'pi pi-fw pi-cog', routerLink: '/store-mannager' }];
 
   constructor(private router: Router) {}
 

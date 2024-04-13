@@ -1,0 +1,14 @@
+<p-toolbar>
+  <div class="p-toolbar-group-start">
+      <button pButton icon="pi pi-plus" pTooltip="agregar item" (click)="save()" tooltipPosition="top" class="mr-2 bg-green-500 border-green-800 "></button>
+      <button pButton icon="pi pi-file-edit" pTooltip="editar item" (click)="edit()" tooltipPosition="top" class="mr-2 bg-blue-500 border-blue-800"></button>
+      <button pButton icon="pi pi-trash" pTooltip="eliminar item" (click)="delete()" tooltipPosition="top" class="mr-2 bg-red-500 border-red-800"></button>
+      <button pButton icon="pi pi-info-circle" pTooltip="visualizar item"  (click)="info()" tooltipPosition="top"></button>
+    </div>
+  <div class="p-toolbar-group-center">
+    <h3 class="text-2xl font-italic">{{tittles.storeMannager}}</h3>
+  </div>
+  <div class="p-toolbar-group-end">
+      <p-splitButton label="Save" icon="pi pi-check" [model]="items"></p-splitButton>
+  </div>
+</p-toolbar>
