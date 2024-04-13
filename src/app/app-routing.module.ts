@@ -6,7 +6,10 @@ const routes: Routes = [{
 },
 {
   path: 'store',
-  loadComponent: () => import('./modules/store/store.component')}
+  loadComponent: () => import('./modules/store/store.component')},
+{
+  path: 'store-mannager',
+  loadComponent: () => import('./modules/store-mannager/store-mannager.component')},
 ];
 
 @NgModule({
