@@ -10,7 +10,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
   exports: [
     ToastModule,
@@ -23,7 +25,9 @@ import { TableModule } from 'primeng/table';
     ToolbarModule,
     SplitButtonModule,
     InputTextModule,
-    TableModule
+    InputTextareaModule,
+    TableModule,
+    DialogModule,
   ],
 
 })

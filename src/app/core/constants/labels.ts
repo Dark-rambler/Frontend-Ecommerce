@@ -1,6 +1,10 @@
 export const tittles = {
   store: 'Store',
   storeMannager: 'Gestion de Productos',
+  CreateProduct: 'Crear Producto',
+  UpdateProduct: 'Actualizar Producto',
+  DeleteProduct: 'Eliminar Producto',
+  InfoProduct: 'Información del Producto',
 };
 
 export const labels: any = {
@@ -18,6 +22,10 @@ export const labels: any = {
   clear: 'Limpiar',
   export: 'Exportar',
   reload: 'Actualizar',
+  addToInventary: 'Agregar al inventario',
+
+
+  required: 'Campo requerido',
 }
 
 export const buttons: any = {

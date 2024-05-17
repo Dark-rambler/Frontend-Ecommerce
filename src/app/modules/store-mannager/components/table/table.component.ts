@@ -29,10 +29,10 @@ export class TableComponent {
     }
 
     public onRowSelect(event:any) {
-      this.storeMannagerService.setSelectedData(event.data);
+      this.sendSelectedProduct(event.data);
     }
     public onRowUnselect(event:any) {
-      console.log(event.data);
+      this.sendSelectedProduct(null);
     }
 
     public getSeverity(product: Product) {
@@ -50,4 +50,7 @@ export class TableComponent {
           return "success";
       }
     };
+    private sendSelectedProduct(product: any) {
+      this.storeMannagerService.setSelectedData(product);
+    }
 }
