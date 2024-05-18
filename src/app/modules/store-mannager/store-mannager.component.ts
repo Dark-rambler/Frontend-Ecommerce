@@ -1,16 +1,16 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { PrimeModule } from 'src/app/prime.module';
+import { Component } from '@angular/core';
+import { StoreMannagerRoutingModule } from './store-mannager-routing.module';
+import { Router } from '@angular/router';
+import { StoreMannagerModule } from './store-mannager.module';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: 'app-store-mannager',
+  templateUrl: './store-mannager.component.html',
+  styleUrls: ['./store-mannager.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, PrimeModule]
+  imports: [StoreMannagerModule]
 })
-export class HeaderComponent implements OnInit {
+export default class StoreMannagerComponent {
   public items: any;
   private menuItems: Object = [ { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: '/home' }, { label: 'Store', icon: 'pi pi-fw pi-shopping-cart', routerLink: '/store' }, { label: 'Store Mannager', icon: 'pi pi-fw pi-cog', routerLink: '/store-mannager' }];
 
@@ -23,4 +23,5 @@ export class HeaderComponent implements OnInit {
   public onLogoClick() {
     this.router.navigate(['/home']);
   }
+
 }
