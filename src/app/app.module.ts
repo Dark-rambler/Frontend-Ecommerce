@@ -8,8 +8,10 @@ import { HeaderComponent } from './core/layout/header/header.component';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -23,7 +25,13 @@ import { BrowserModule } from '@angular/platform-browser';
     HeaderComponent,
     LoaderComponent,
   ],
-  providers: [],
+  providers: [
+    MessageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
