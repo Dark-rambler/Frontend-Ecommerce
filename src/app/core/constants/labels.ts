@@ -5,6 +5,7 @@ export const tittles = {
   UpdateProduct: 'Actualizar Producto',
   DeleteProduct: 'Eliminar Producto',
   InfoProduct: 'Información del Producto',
+  ExpenseManagement: 'Gestión de Gastos',
 };
 
 export const labels: any = {
@@ -23,8 +24,8 @@ export const labels: any = {
   export: 'Exportar',
   reload: 'Actualizar',
   addToInventary: 'Agregar al inventario',
-
-
+  amount: 'Cantidad',
+  date: 'Fecha',
   required: 'Campo requerido',
 }
 
@@ -50,4 +51,11 @@ export const tooltip: any = {
   clear: 'Limpiar',
   export: 'Exportar',
   reload: 'Actualizar',
+}
+
+
+export const headers  = {
+  expenses: 'Gastos',
+  income: 'Ingresos',
+  reports: 'Reportes'
 }
