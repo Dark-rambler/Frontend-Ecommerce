@@ -4,18 +4,19 @@ import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/mod
 import { ModalInformationComponent } from 'src/app/shared/components/modal-information/modal-information.component';
 import { ExpensesService } from '../../services/expenses.service';
 import { Table } from 'primeng/table';
+import { ModalFormsComponent } from '../modal-forms/modal-forms.component';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-  
+
 })
 export class ToolbarComponent {
   public buttons = buttons;
   public tableComponent: any;
   public modalInfoComponent: ModalInformationComponent;
-  // public modalFormComponent: ModalFormsComponent;
+  public modalFormComponent: ModalFormsComponent;
   public modalDeleteComponent: ModalDeleteComponent;
 
   constructor(private expensesService: ExpensesService) { }
@@ -24,23 +25,27 @@ export class ToolbarComponent {
     this.initializeModalsListeners();
   }
   public create() {
-    // this.modalFormComponent.openCreate();
+    this.modalFormComponent.openCreate();
   }
   public edit() {
-    // this.modalFormComponent.openEdit();
+    this.modalFormComponent.openEdit();
   }
   public deleteSelected() {
-    // this.modalDeleteComponent.openConfirm();
+    this.modalDeleteComponent.openConfirm();
   }
   public info() {
-    // this.modalInfoComponent.openInfo();
+     this.modalInfoComponent.openInfo();
   }
   private initializeModalsListeners() {
     this.expensesService.triggerTable.subscribe((response: Table) => {
+      console.log(response);
+
       this.tableComponent = response;
     });
 
     this.expensesService.triggerInfo.subscribe((response: ModalInformationComponent) => {
+      console.log(response);
+
       this.modalInfoComponent = response;
     });
 
@@ -48,9 +53,9 @@ export class ToolbarComponent {
       this.modalDeleteComponent = response;
     });
 
-    // this.expensesService.trigger.subscribe((response: ModalFormsComponent) => {
-    //   this.modalFormComponent = response;
-    // });
+    this.expensesService.trigger.subscribe((response: ModalFormsComponent) => {
+      this.modalFormComponent = response;
+    });
   }
 
 }

@@ -1,0 +1,66 @@
+<p-toast></p-toast>
+<form [formGroup]="formPSGroups">
+  <p-dialog
+    [(visible)]="dialog"
+    [style]="{ width: '50vw' }"
+    header="{{ tittleForm }}"
+    [modal]="true"
+    class="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="p-fluid p-formgrid grid">
+        <div hidden class="form-group field">
+          <input type="text" pInputText id="id" formControlName="id" />
+        </div>
+        <div class="form-group field col-12">
+          <label for="name">{{ labels.name }} *</label>
+          <input
+            type="text"
+            pInputText
+            id="name"
+            required
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted && formPSGroups.controls['name'].invalid
+            }"
+            formControlName="name"
+          />
+          <!-- <app-form-control-error
+            [control]="formPSGroups.get('name')"
+            [submitted]="submitted"
+          >
+          </app-form-control-error> -->
+        </div>
+        <div class="form-group field col-12">
+          <label for="description">{{ labels.description }}</label>
+          <textarea
+            id="description"
+            pInputTextarea
+            rows="3"
+            cols="20"
+            formControlName="description"
+          ></textarea>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        [label]="buttons.cancel"
+        icon="pi pi-times"
+        class="p-button-secondary p-button-rounded mr-2"
+        (click)="openDialog(false, false)"
+      ></button>
+      <button
+        pButton
+        pRipple
+        [label]="buttons.save"
+        icon="pi pi-check"
+        class="p-button-rounded mr-2"
+        (click)="save()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+</form>

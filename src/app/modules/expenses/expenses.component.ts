@@ -5,18 +5,21 @@ import { headers } from 'src/app/core/constants/labels';
 import { ExpensesService } from './services/expenses.service';
 import { HelpersService } from 'src/app/core/services/helpers.service';
 import { TranslateLoader, TranslateService, TranslateStore } from '@ngx-translate/core';
+import { ModalInformationComponent } from 'src/app/shared/components/modal-information/modal-information.component';
+import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/modal-delete.component';
 
 @Component({
   selector: 'app-expenses',
   standalone: true,
-  imports: [CommonModule, ExpensesModule],
+  imports: [CommonModule, ExpensesModule, ModalInformationComponent, ],
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
-  providers: [HelpersService, ]
+  providers: [CommonModule, HelpersService]
 })
 export default class ExpensesComponent {
   public headers = headers;
   public data: any;
+  public columns: string[] = ['name', 'description', 'amount', 'date'];
 
 
   constructor(

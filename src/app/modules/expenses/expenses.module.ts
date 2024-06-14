@@ -5,23 +5,27 @@ import { ExpensesRoutingModule } from './expenses-routing.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { PrimeModule } from 'src/app/prime.module';
 import { TableComponent } from './components/table/table.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModalFormsComponent } from './components/modal-forms/modal-forms.component';
 
 
 @NgModule({
   declarations: [
     ToolbarComponent,
-    TableComponent
+    TableComponent,
+    ModalFormsComponent
   ],
   exports: [
     ToolbarComponent,
-    TableComponent
+    TableComponent,
+    ModalFormsComponent
   ],
   imports: [
     CommonModule,
     ExpensesRoutingModule,
     PrimeModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ExpensesModule { }

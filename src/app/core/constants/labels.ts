@@ -5,7 +5,9 @@ export const tittles = {
   UpdateProduct: 'Actualizar Producto',
   DeleteProduct: 'Eliminar Producto',
   InfoProduct: 'Información del Producto',
-  ExpenseManagement: 'Gestión de Gastos',
+  expenseManagement: 'Gestión de Gastos',
+  create: 'Crear',
+  edit: 'Editar',
 };
 
 export const labels: any = {
