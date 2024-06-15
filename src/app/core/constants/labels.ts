@@ -59,5 +59,6 @@ export const tooltip: any = {
 export const headers  = {
   expenses: 'Gastos',
   income: 'Ingresos',
-  reports: 'Reportes'
+  reports: 'Reportes',
+documentTypes: 'Tipos de Documentos',
 }

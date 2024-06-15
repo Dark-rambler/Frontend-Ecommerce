@@ -7,6 +7,10 @@ const routes: Routes = [{
 {
   path: 'expenses',
   loadComponent: () => import('./modules/expenses/expenses.component')
+},
+{
+  path: 'document-types',
+  loadComponent: () => import('./modules/document-types/document-types.component')
 }
 ];
 
