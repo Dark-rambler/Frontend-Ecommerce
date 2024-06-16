@@ -116,7 +116,7 @@ export class TableComponent {
   }
 
   public reload() {
-    // this.createGrid();
+    this.expensesService.setFilteredData(new Expense());
   }
 
   public filterColumns(event: any) {

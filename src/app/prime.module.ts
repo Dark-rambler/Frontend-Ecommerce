@@ -15,6 +15,7 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   exports: [
     ToastModule,
@@ -32,6 +33,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     DialogModule,
     DropdownModule,
     MultiSelectModule,
+    CalendarModule
   ],
 
 })

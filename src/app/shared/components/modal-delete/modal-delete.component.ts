@@ -1,11 +1,25 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { catchError, tap } from 'rxjs';
 import { messages } from 'src/app/core/constants/messages';
+import { AppFormatValueDirective } from 'src/app/core/directives/app-format-value.directive';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { HelpersService } from 'src/app/core/services/helpers.service';
+import { PrimeModule } from 'src/app/prime.module';
 
 @Component({
   selector: 'app-modal-delete',
   standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    PrimeModule,
+    PipesModule,
+    AppFormatValueDirective,
+  ],
   templateUrl: './modal-delete.component.html',
   styleUrls: ['./modal-delete.component.scss']
 })

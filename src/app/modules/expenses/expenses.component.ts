@@ -24,17 +24,22 @@ export default class ExpensesComponent {
 
   constructor(
     public expensesService: ExpensesService
-
   ) {}
 
   ngOnInit(): void {
     this.createGrid();
+    this.retrieveReloadData();
   }
   private createGrid(): void {
   this.expensesService.findAll().subscribe((data) => {
     this.data = data;
   });}
 
-
+  private retrieveReloadData() {
+    this.expensesService.getFilteredData().subscribe((data) => {
+      this.createGrid();
+    }
+    );
+  }
 
 }

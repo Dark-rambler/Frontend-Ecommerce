@@ -11,6 +11,7 @@ export const tittles = {
 };
 
 export const labels: any = {
+  total: 'Total',
   name: 'Nombre',
   description: 'Descripción',
   price: 'Precio',
@@ -29,6 +30,7 @@ export const labels: any = {
   amount: 'Cantidad',
   date: 'Fecha',
   required: 'Campo requerido',
+  documentType: 'Tipo de documento',
 }
 
 export const buttons: any = {

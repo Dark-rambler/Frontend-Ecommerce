@@ -31,7 +31,7 @@ export class ToolbarComponent {
     this.modalFormComponent.openEdit();
   }
   public deleteSelected() {
-    this.modalDeleteComponent.confirmDelete();
+    this.modalDeleteComponent.openConfirm();
   }
   public info() {
      this.modalInfoComponent.openInfo();

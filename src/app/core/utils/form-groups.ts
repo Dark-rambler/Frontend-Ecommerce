@@ -17,9 +17,9 @@ export class FormUtils {
       id: new FormControl(''),
       name: new FormControl('', [Validators.required]),
       description: new FormControl('', ),
-      price: new FormControl('', [Validators.required]),
-      categoryId: new FormControl('', [Validators.required]),
-      inventory : new FormControl('', [Validators.required]),
+      amount: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
+      documentTypeId : new FormControl('', [Validators.required]),
     })
   }
 

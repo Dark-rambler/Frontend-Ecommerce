@@ -8,6 +8,8 @@ import { ExpensesService } from '../../services/expenses.service';
 import { HelpersService } from 'src/app/core/services/helpers.service';
 import { FormUtils } from 'src/app/core/utils/form-groups';
 import { catchError, of, tap } from 'rxjs';
+import { DocumentTypesService } from 'src/app/modules/document-types/services/document-types.service';
+import { DocumentType } from 'src/app/core/model/document-type';
 
 @Component({
   selector: 'app-modal-forms',
@@ -23,13 +25,14 @@ export class ModalFormsComponent {
   public tittleForm: string = "";
   public dialog: boolean = false;
   public submitted: boolean = false;
-
+  public documentTypes: DocumentType[] = [];
   private expense!: Expense;
   private expenseResponse: any;
   private tableComponent!: TableComponent;
 
   constructor(
     private expensesService: ExpensesService,
+    private documentTypesService: DocumentTypesService,
     private helpersService: HelpersService,
   ) { }
 
@@ -38,15 +41,18 @@ export class ModalFormsComponent {
     this.expensesService.trigger.emit(this);
     this.registerTableComponentListener();
     this.formPSGroups = FormUtils.getDefaultExpenseFormGroup();
+
   }
 
   public openCreate() {
+    this.loadModels();
     this.reset();
     this.tittleForm = tittles.create;
     this.openDialog(true, false);
   }
 
   public openEdit() {
+    this.loadModels();
     this.tittleForm = tittles.edit;
     if (this.expenseResponse && this.expenseResponse.id) {
       this.expensesService
@@ -79,6 +85,8 @@ export class ModalFormsComponent {
   }
 
   private submit(action: 'create' | 'update', expenseId?: number): void {
+    console.log('llega al submit');
+
     let data: Expense = {
       ...this.formPSGroups.value,
     };
@@ -135,6 +143,13 @@ export class ModalFormsComponent {
 
   private updateFormValues(psGroup: Expense) {
     this.formPSGroups.patchValue(psGroup);
+  }
+
+    private loadModels() {
+      this.documentTypesService.findAll().subscribe((documentTypes: DocumentType[]) => {
+        this.documentTypes = documentTypes;
+      }
+    );
   }
 
 }
