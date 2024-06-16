@@ -5,6 +5,7 @@ import { HelpersService } from 'src/app/core/services/helpers.service';
 
 @Component({
   selector: 'app-modal-delete',
+  standalone: true,
   templateUrl: './modal-delete.component.html',
   styleUrls: ['./modal-delete.component.scss']
 })
@@ -28,7 +29,7 @@ export class ModalDeleteComponent {
 
     if (this.fromGeneralToolbar) {
       this.serviceObject
-        .getObjectSelectedChange()
+        .getSelectedData()
         .subscribe((response: typeof this.object) => {
           this.object = response;
         });

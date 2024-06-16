@@ -5,7 +5,6 @@ import { TableColumn } from "../interface/table-column.interface";
 
 export class TableColumnDefinitions{
   static getDefaultExpenseColumns():TableColumn[]{
-
       return [
         {
           field: 'name',
@@ -30,7 +29,31 @@ export class TableColumnDefinitions{
           header: labels.date,
           type: ColumnFilterType.DATE,
           columnType: TableColumnType.DATE,
+        },
+        {
+          field: 'documentTypeName',
+          header: labels.category,
+          type: ColumnFilterType.TEXT,
+          columnType: TableColumnType.TEXT,
         }
       ]
+  }
+
+  static getDefaultDocumentTypeColumns():TableColumn[]{
+    return [
+      {
+        field: 'name',
+        header: labels.name,
+        type: ColumnFilterType.TEXT,
+        columnType: TableColumnType.TEXT,
+      },
+      {
+        field: 'description',
+        header: labels.description,
+        type: ColumnFilterType.TEXT,
+        columnType: TableColumnType.TEXT,
+      }
+    ]
+
   }
 }

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { environment } from 'src/app/core/enviroments/enviroment.development';
 import { DocumentType } from 'src/app/core/model/document-type';
 import { HttpService } from 'src/app/core/services/http.service';
 
@@ -12,7 +13,7 @@ export class DocumentTypesService extends HttpService<DocumentType>{
   @Output() triggerDelete: EventEmitter<any> = new EventEmitter();
   @Output() triggerTable: EventEmitter<any> = new EventEmitter();
 
-  constructor(http:HttpClient) {
-    super(http, 'document-types')
-   }
+  constructor(protected override http: HttpClient) {
+    super(http, `${environment.systemUrl}/documentType`);
+  }
 }

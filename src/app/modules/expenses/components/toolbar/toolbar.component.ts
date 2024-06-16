@@ -31,7 +31,7 @@ export class ToolbarComponent {
     this.modalFormComponent.openEdit();
   }
   public deleteSelected() {
-    this.modalDeleteComponent.openConfirm();
+    this.modalDeleteComponent.confirmDelete();
   }
   public info() {
      this.modalInfoComponent.openInfo();
@@ -50,10 +50,14 @@ export class ToolbarComponent {
     });
 
     this.expensesService.triggerDelete.subscribe((response: ModalDeleteComponent) => {
+      console.log(response);
+
       this.modalDeleteComponent = response;
     });
 
     this.expensesService.trigger.subscribe((response: ModalFormsComponent) => {
+      console.log(response);
+
       this.modalFormComponent = response;
     });
   }

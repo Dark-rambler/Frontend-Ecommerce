@@ -4,6 +4,7 @@ import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/mod
 import { DocumentTypesService } from '../../services/document-types.service';
 import { ModalInformationComponent } from 'src/app/shared/components/modal-information/modal-information.component';
 import { Table } from 'primeng/table';
+import { ModalFormsComponent } from '../modal-forms/modal-forms.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -14,7 +15,7 @@ export class ToolbarComponent {
   public buttons = buttons;
   public tableComponent: any;
   public modalInfoComponent: ModalInformationComponent;
-  // public modalFormComponent: ModalFormsComponent;
+  public modalFormComponent: ModalFormsComponent;
   public modalDeleteComponent: ModalDeleteComponent;
 
   constructor(private documentTypesService: DocumentTypesService) { }
@@ -23,10 +24,10 @@ export class ToolbarComponent {
     this.initializeModalsListeners();
   }
   public create() {
-    // this.modalFormComponent.openCreate();
+    this.modalFormComponent.openCreate();
   }
   public edit() {
-    // this.modalFormComponent.openEdit();
+    this.modalFormComponent.openEdit();
   }
   public deleteSelected() {
     this.modalDeleteComponent.openConfirm();
@@ -48,12 +49,15 @@ export class ToolbarComponent {
     });
 
     this.documentTypesService.triggerDelete.subscribe((response: ModalDeleteComponent) => {
+      console.log(response);
+
       this.modalDeleteComponent = response;
     });
 
-    // this.documentTypesService.trigger.subscribe((response: ModalFormsComponent) => {
-    //   this.modalFormComponent = response;
-    // });
+    this.documentTypesService.trigger.subscribe((response: ModalFormsComponent) => {
+      console.log(response);
+      this.modalFormComponent = response;
+    });
   }
 
 }

@@ -5,35 +5,34 @@ import { buttons, labels, tittles } from 'src/app/core/constants/labels';
 import { messages } from 'src/app/core/constants/messages';
 import { ColumnFilterType } from 'src/app/core/enums/column-filter-types.enum';
 import { TableColumn } from 'src/app/core/interface/table-column.interface';
-import { Expense } from 'src/app/core/model/expense';
-import { ExpensesService } from '../../services/expenses.service';
+import { DocumentType } from 'src/app/core/model/document-type';
+import { Pageable } from 'src/app/core/model/pageable';
+import { DocumentTypesService } from '../../services/document-types.service';
+import { HelpersService } from 'src/app/core/services/helpers.service';
 import { FilterService } from 'primeng/api';
 import { toYMDdateFormat } from 'src/app/core/utils/date-formats';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { fromTableLazyLoadFiltersToObject } from 'src/app/core/utils/filter';
-import { Pageable } from 'src/app/core/model/pageable';
-import { HelpersService } from 'src/app/core/services/helpers.service';
 import { TableColumnDefinitions } from 'src/app/core/utils/table-column-definitions';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
-
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent {
   @ViewChild('filter') filter!: ElementRef;
-  @Input() data: Expense[] = [];
+  @Input() data: DocumentType[] = [];
 
   public messages = messages;
   public labels = labels;
   public tittles = tittles;
   public buttons = buttons;
   public common = common;
-  public expenses!: Expense[];
-  public expense: Expense;
+  public expenses!: DocumentType[];
+  public expense: DocumentType;
   public columns: TableColumn[] = [];
-  public columnsToShow: string[] = ['name', 'amount', 'description','documentTypeName', 'date'];
+  public columnsToShow: string[] = ['name', 'description'];
   public columnsStatus: TableColumn[] = [];
   public firstPage = 0;
   // public pageable: any
@@ -44,13 +43,13 @@ export class TableComponent {
   private searchSubject = new Subject<string>();
 
   constructor(
-    private expensesService: ExpensesService,
+    private documentTypesService: DocumentTypesService,
     private helpersService: HelpersService,
     public filterService: FilterService
   ) { }
 
   ngOnInit() {
-    this.expensesService.triggerTable.emit(this);
+    this.documentTypesService.triggerTable.emit(this);
     this.initializeColumnInformation();
     this.initializeDefaultVariables();
     this.initializeDebounceSearch();
@@ -71,24 +70,11 @@ export class TableComponent {
   public loadProgrammaticStructures(event: TableLazyLoadEvent) {
     const filters = fromTableLazyLoadFiltersToObject(event.filters)
     this.pageable.setPageableValues(event);
-    // this.createGrid(filters);
   }
 
-  // private createGrid(filters?: any) {
-  //   this.expensesService.findAll()
-  //     .subscribe((response: any) => {
-  //       this.expenses = response.content;
-  //       this.totalRecords = response.totalElements;
-  //     });
-  //   // this.expensesService.pageable(this.pageable, filters, this.globalFilter)
-  //   //   .subscribe((response: any) => {
-  //   //     this.budgetAuthorizations = response.content;
-  //   //     this.totalRecords = response.totalElements;
-  //   //   });
-  // }
 
   private initializeDefaultVariables() {
-    this.expense = new Expense();
+    this.expense = new DocumentType();
     this.pageable = new Pageable();
     this.firstPage = 0;
   }
@@ -98,11 +84,11 @@ export class TableComponent {
   }
 
   public onRowUnselect(event: any) {
-    this.sendSelectedProgrammaticStructure(new Expense());
+    this.sendSelectedProgrammaticStructure(new DocumentType());
   }
 
-  public sendSelectedProgrammaticStructure(ProgrammaticStructure: Expense) {
-    this.expensesService.setSelectedData(ProgrammaticStructure);
+  public sendSelectedProgrammaticStructure(documentType: DocumentType) {
+    this.documentTypesService.setSelectedData(documentType);
   }
 
   public onSearch() {
@@ -116,7 +102,7 @@ export class TableComponent {
   }
 
   public reload() {
-    // this.createGrid();
+    this.documentTypesService.setFilteredData(new DocumentType());
   }
 
   public filterColumns(event: any) {
@@ -146,5 +132,4 @@ export class TableComponent {
 
     });
   }
-
 }

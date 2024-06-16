@@ -11,7 +11,7 @@ import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/mod
 @Component({
   selector: 'app-expenses',
   standalone: true,
-  imports: [CommonModule, ExpensesModule, ModalInformationComponent, ],
+  imports: [CommonModule, ExpensesModule, ModalInformationComponent,ModalDeleteComponent ],
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
   providers: [CommonModule, HelpersService]
@@ -19,7 +19,7 @@ import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/mod
 export default class ExpensesComponent {
   public headers = headers;
   public data: any;
-  public columns: string[] = ['name', 'description', 'amount', 'date'];
+  public columns: string[] = ['name', 'description', 'amount','documenType', 'date'];
 
 
   constructor(
