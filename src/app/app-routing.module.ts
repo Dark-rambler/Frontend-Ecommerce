@@ -11,7 +11,11 @@ const routes: Routes = [{
 {
   path: 'document-types',
   loadComponent: () => import('./modules/document-types/document-types.component')
-}
+},
+{
+  path : 'incomes',
+  loadComponent: () => import('./modules/incomes/incomes.component')
+},
 ];
 
 @NgModule({
