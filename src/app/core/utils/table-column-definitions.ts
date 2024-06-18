@@ -56,4 +56,39 @@ export class TableColumnDefinitions{
     ]
 
   }
+
+  static getDefaultIncomeColumns():TableColumn[]{
+    return [
+      {
+        field: 'name',
+        header: labels.name,
+        type: ColumnFilterType.TEXT,
+        columnType: TableColumnType.TEXT,
+      },
+      {
+        field: 'description',
+        header: labels.description,
+        type: ColumnFilterType.TEXT,
+        columnType: TableColumnType.TEXT,
+      },
+      {
+        field: 'amount',
+        header: labels.amount,
+        type: ColumnFilterType.NUMERIC,
+        columnType: TableColumnType.NUMERIC,
+      },
+      {
+        field: 'date',
+        header: labels.date,
+        type: ColumnFilterType.DATE,
+        columnType: TableColumnType.DATE,
+      },
+      {
+        field: 'documentTypeName',
+        header: labels.category,
+        type: ColumnFilterType.TEXT,
+        columnType: TableColumnType.TEXT,
+      }
+    ]
+  }
 }

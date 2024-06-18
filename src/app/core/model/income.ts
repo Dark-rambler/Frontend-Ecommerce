@@ -1,6 +1,6 @@
 import { Base } from "./base";
 
-export class Expense extends Base{
+export class Income extends Base{
   id: any= null;
   Name: string ;
   Description: string;

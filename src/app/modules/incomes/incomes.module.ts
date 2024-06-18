@@ -5,15 +5,18 @@ import { IncomesRoutingModule } from './incomes-routing.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { PrimeModule } from 'src/app/prime.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableComponent } from './components/table/table.component';
 
 
 @NgModule({
   declarations: [
-    ToolbarComponent
+    ToolbarComponent,
+    TableComponent
   ],
   exports: [
-    ToolbarComponent
-  ], 
+    ToolbarComponent,
+    TableComponent
+  ],
   imports: [
     CommonModule,
     PrimeModule,

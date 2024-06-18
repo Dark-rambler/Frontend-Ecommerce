@@ -7,6 +7,7 @@ import { IncomesModule } from './incomes.module';
 import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/modal-delete.component';
 import { ModalInformationComponent } from 'src/app/shared/components/modal-information/modal-information.component';
 import { HelpersService } from 'src/app/core/services/helpers.service';
+import { Income } from 'src/app/core/model/income';
 
 @Component({
   selector: 'app-incomes',
@@ -18,7 +19,7 @@ import { HelpersService } from 'src/app/core/services/helpers.service';
 })
 export default class IncomesComponent {
   public headers = headers;
-  public data: any;
+  public data: Income [];
   public columns: string[] = ['name', 'description', 'amount','documenType', 'date'];
   public subcxriptions = new Subscription();
 

@@ -6,6 +6,7 @@ export const tittles = {
   DeleteProduct: 'Eliminar Producto',
   InfoProduct: 'Información del Producto',
   expenseManagement: 'Gestión de Gastos',
+  incomeManagement: 'Gestión de Ingresos',
   create: 'Crear',
   edit: 'Editar',
 };
