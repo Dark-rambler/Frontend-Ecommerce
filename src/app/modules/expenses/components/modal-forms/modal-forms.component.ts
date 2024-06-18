@@ -40,7 +40,7 @@ export class ModalFormsComponent {
     this.waitForPSGroupSelection();
     this.expensesService.trigger.emit(this);
     this.registerTableComponentListener();
-    this.formPSGroups = FormUtils.getDefaultExpenseFormGroup();
+    this.formPSGroups = FormUtils.getDefaultDocumentTypeFormGroup();
 
   }
 

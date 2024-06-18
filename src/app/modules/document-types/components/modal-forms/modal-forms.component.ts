@@ -37,7 +37,7 @@ export class ModalFormsComponent {
     this.waitForPSGroupSelection();
     this.documentTypesService.trigger.emit(this);
     this.registerTableComponentListener();
-    this.formPSGroups = FormUtils.getDefaultExpenseFormGroup();
+    this.formPSGroups = FormUtils.getDefaultDocumentTypeFormGroup();
   }
 
   public openCreate() {
@@ -71,6 +71,8 @@ export class ModalFormsComponent {
 
   public save() {
     this.submitted = true;
+    console.log(this.formPSGroups.value);
+
     if (this.formPSGroups.valid) {
       this.expense.id
         ? this.submit('update', this.expense.id)
@@ -109,7 +111,7 @@ export class ModalFormsComponent {
   }
 
   private reset(): void {
-    this.formPSGroups = FormUtils.getDefaultExpenseFormGroup();
+    this.formPSGroups = FormUtils.getDefaultDocumentTypeFormGroup();
     this.expense = new DocumentType();
   }
 

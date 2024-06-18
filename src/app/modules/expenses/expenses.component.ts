@@ -7,6 +7,7 @@ import { HelpersService } from 'src/app/core/services/helpers.service';
 import { TranslateLoader, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { ModalInformationComponent } from 'src/app/shared/components/modal-information/modal-information.component';
 import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/modal-delete.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-expenses',
@@ -20,7 +21,7 @@ export default class ExpensesComponent {
   public headers = headers;
   public data: any;
   public columns: string[] = ['name', 'description', 'amount','documenType', 'date'];
-
+  public subcxriptions = new Subscription();
 
   constructor(
     public expensesService: ExpensesService
@@ -30,15 +31,19 @@ export default class ExpensesComponent {
     this.createGrid();
     this.retrieveReloadData();
   }
+
+  ngOnDestroy(): void {
+    this.subcxriptions.unsubscribe();
+  }
   private createGrid(): void {
   this.expensesService.findAll().subscribe((data) => {
     this.data = data;
   });}
 
   private retrieveReloadData() {
-    this.expensesService.getFilteredData().subscribe((data) => {
+    this.subcxriptions.add( this.expensesService.getFilteredData().subscribe((data) => {
       this.createGrid();
-    }
+    })
     );
   }
 

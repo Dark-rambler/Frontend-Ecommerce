@@ -23,4 +23,12 @@ export class FormUtils {
     })
   }
 
+  static getDefaultDocumentTypeFormGroup():FormGroup{
+    return new FormGroup({
+      id: new FormControl(''),
+      name: new FormControl('', [Validators.required]),
+      description: new FormControl('', ),
+    })
+  }
+
 }
