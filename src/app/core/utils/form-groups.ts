@@ -31,4 +31,15 @@ export class FormUtils {
     })
   }
 
+  static getDefaultIncomeFormGroup():FormGroup{
+    return new FormGroup({
+      id: new FormControl(''),
+      name: new FormControl('', [Validators.required]),
+      description: new FormControl('', ),
+      amount: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
+      documentTypeId : new FormControl('', [Validators.required]),
+    })
+  }
+
 }

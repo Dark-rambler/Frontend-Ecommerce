@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { buttons, labels, tittles } from 'src/app/core/constants/labels';
 import { messages } from 'src/app/core/constants/messages';
-import { Expense } from 'src/app/core/model/expense';
+import { Income } from 'src/app/core/model/income';
 import { TableComponent } from '../table/table.component';
-import { ExpensesService } from '../../services/expenses.service';
+import { IncomesService } from '../../services/incomes.service';
+import { DocumentTypesService } from 'src/app/modules/document-types/services/document-types.service';
 import { HelpersService } from 'src/app/core/services/helpers.service';
 import { FormUtils } from 'src/app/core/utils/form-groups';
 import { catchError, of, tap } from 'rxjs';
-import { DocumentTypesService } from 'src/app/modules/document-types/services/document-types.service';
 import { DocumentType } from 'src/app/core/model/document-type';
 
 @Component({
@@ -26,19 +26,19 @@ export class ModalFormsComponent {
   public dialog: boolean = false;
   public submitted: boolean = false;
   public documentTypes: DocumentType[] = [];
-  private expense!: Expense;
+  private expense!: Income;
   private expenseResponse: any;
   private tableComponent!: TableComponent;
 
   constructor(
-    private expensesService: ExpensesService,
+    private incomesService: IncomesService,
     private documentTypesService: DocumentTypesService,
     private helpersService: HelpersService,
   ) { }
 
   ngOnInit() {
     this.waitForPSGroupSelection();
-    this.expensesService.trigger.emit(this);
+    this.incomesService.trigger.emit(this);
     this.registerTableComponentListener();
     this.formPSGroups = FormUtils.getDefaultDocumentTypeFormGroup();
 
@@ -55,7 +55,7 @@ export class ModalFormsComponent {
     this.loadModels();
     this.tittleForm = tittles.edit;
     if (this.expenseResponse && this.expenseResponse.id) {
-      this.expensesService
+      this.incomesService
         .findById(parseInt(this.expenseResponse.id))
         .pipe(
           tap((expense: any) => {
@@ -86,13 +86,13 @@ export class ModalFormsComponent {
 
   private submit(action: 'create' | 'update', expenseId?: number): void {
 
-    let data: Expense = {
+    let data: Income = {
       ...this.formPSGroups.value,
     };
     const serviceObservable =
       action === 'create'
-        ? this.expensesService.create(data)
-        : this.expensesService.update(expenseId!, data);
+        ? this.incomesService.create(data)
+        : this.incomesService.update(expenseId!, data);
 
     serviceObservable
       .pipe(
@@ -117,7 +117,7 @@ export class ModalFormsComponent {
 
   private reset(): void {
     this.formPSGroups = FormUtils.getDefaultExpenseFormGroup();
-    this.expense = new Expense();
+    this.expense = new Income();
   }
 
   private displayMessage(type: string, error: string) {
@@ -125,22 +125,22 @@ export class ModalFormsComponent {
   }
 
   private waitForPSGroupSelection() {
-    this.expensesService
+    this.incomesService
       .getSelectedData()
-      .subscribe((response: Expense) => {
+      .subscribe((response: Income) => {
         this.expenseResponse = response;
       });
   }
 
   private registerTableComponentListener() {
-    this.expensesService
+    this.incomesService
       .triggerTable
       .subscribe((tableComponent: TableComponent) => {
         this.tableComponent = tableComponent;
       });
   }
 
-  private updateFormValues(psGroup: Expense) {
+  private updateFormValues(psGroup: Income) {
     this.formPSGroups.patchValue(psGroup);
   }
 

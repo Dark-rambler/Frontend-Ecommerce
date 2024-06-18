@@ -6,16 +6,19 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { PrimeModule } from 'src/app/prime.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from './components/table/table.component';
+import { ModalFormsComponent } from './components/modal-forms/modal-forms.component';
 
 
 @NgModule({
   declarations: [
     ToolbarComponent,
-    TableComponent
+    TableComponent,
+    ModalFormsComponent
   ],
   exports: [
     ToolbarComponent,
-    TableComponent
+    TableComponent,
+    ModalFormsComponent
   ],
   imports: [
     CommonModule,

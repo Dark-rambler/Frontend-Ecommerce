@@ -71,7 +71,6 @@ export class ModalFormsComponent {
 
   public save() {
     this.submitted = true;
-    console.log(this.formPSGroups.value);
 
     if (this.formPSGroups.valid) {
       this.expense.id

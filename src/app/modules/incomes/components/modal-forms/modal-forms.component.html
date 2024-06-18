@@ -1,0 +1,133 @@
+<p-toast></p-toast>
+<form [formGroup]="formPSGroups">
+  <p-dialog
+    [(visible)]="dialog"
+    [style]="{ width: '50vw' }"
+    header="{{ tittleForm }}"
+    [modal]="true"
+    class="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="p-fluid p-formgrid grid">
+        <div hidden class="form-group field">
+          <input type="text" pInputText id="id" formControlName="id" />
+        </div>
+        <div class="form-group field md:col-6">
+          <label for="name">{{ labels.name }} *</label>
+          <input
+            type="text"
+            pInputText
+            id="name"
+            required
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted && formPSGroups.controls['name'].invalid
+            }"
+            formControlName="name"
+          />
+          <!-- <app-form-control-error
+            [control]="formPSGroups.get('name')"
+            [submitted]="submitted"
+          >
+          </app-form-control-error> -->
+        </div>
+        <div class="form-group field md:col-6 ">
+          <label for="documentTypeId">{{ labels.documentType }} *</label>
+          <p-dropdown
+            inputId="documentTypeId"
+            id="documentTypeId"
+            appendTo="body"
+            [options]="documentTypes"
+            formControlName="documentTypeId"
+            [autoDisplayFirst]="false"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            [showClear]="true"
+
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted &&
+                formPSGroups.controls['auxiliaryId'].invalid
+            }"
+          >
+          </p-dropdown>
+          <!-- <app-form-control-error
+            [control]="formAccountingRelationships.get('auxiliaryId')"
+            [submitted]="submitted"
+          >
+          </app-form-control-error> -->
+        </div>
+        <div class="form-group field col-6">
+          <label for="date">{{ labels.date }} *</label>
+          <p-calendar
+            class="w-2"
+            class="m-1"
+            [readonlyInput]="true"
+            [showIcon]="true"
+            [showClear]="true"
+            placeholder="Seleccione fecha de finalizacion"
+            formControlName="date"
+          >
+          </p-calendar>
+          <!-- <app-form-control-error
+            [submitted]="submitted"
+            [control]="formAuthorizationTypes.get('endDate')"
+          ></app-form-control-error> -->
+        </div>
+        <div class="form-group field md:col-6">
+          <label for="amount">{{ labels.total }} *</label>
+          <input
+            type="text"
+            pInputText
+            id="amount"
+            required
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted && formPSGroups.controls['amount'].invalid
+            }"
+            formControlName="amount"
+          />
+          <!-- <app-form-control-error
+            [control]="formPSGroups.get('amount')"
+            [submitted]="submitted"
+          >
+          </app-form-control-error> -->
+        </div>
+
+
+        <div class="form-group field col-12">
+          <label for="description">{{ labels.description }}</label>
+          <textarea
+            id="description"
+            pInputTextarea
+            rows="3"
+            cols="20"
+            formControlName="description"
+          ></textarea>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        [label]="buttons.cancel"
+        icon="pi pi-times"
+        class="p-button-secondary p-button-rounded mr-2"
+        (click)="openDialog(false, false)"
+      ></button>
+      <button
+        pButton
+        pRipple
+        [label]="buttons.save"
+        icon="pi pi-check"
+        class="p-button-rounded mr-2"
+        (click)="save()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+</form>

@@ -37,25 +37,21 @@ export class ToolbarComponent {
   }
   private initializeModalsListeners() {
     this.documentTypesService.triggerTable.subscribe((response: Table) => {
-      console.log(response);
 
       this.tableComponent = response;
     });
 
     this.documentTypesService.triggerInfo.subscribe((response: ModalInformationComponent) => {
-      console.log(response);
 
       this.modalInfoComponent = response;
     });
 
     this.documentTypesService.triggerDelete.subscribe((response: ModalDeleteComponent) => {
-      console.log(response);
 
       this.modalDeleteComponent = response;
     });
 
     this.documentTypesService.trigger.subscribe((response: ModalFormsComponent) => {
-      console.log(response);
       this.modalFormComponent = response;
     });
   }
