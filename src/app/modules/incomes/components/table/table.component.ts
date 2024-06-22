@@ -5,9 +5,9 @@ import { buttons, labels, tittles } from 'src/app/core/constants/labels';
 import { messages } from 'src/app/core/constants/messages';
 import { ColumnFilterType } from 'src/app/core/enums/column-filter-types.enum';
 import { TableColumn } from 'src/app/core/interface/table-column.interface';
-import { DocumentType } from 'src/app/core/model/document-type';
+import { Income } from 'src/app/core/model/income';
 import { Pageable } from 'src/app/core/model/pageable';
-import { DocumentTypesService } from '../../services/document-types.service';
+import { IncomesService } from '../../services/incomes.service';
 import { HelpersService } from 'src/app/core/services/helpers.service';
 import { FilterService } from 'primeng/api';
 import { toYMDdateFormat } from 'src/app/core/utils/date-formats';
@@ -22,17 +22,17 @@ import { TableColumnDefinitions } from 'src/app/core/utils/table-column-definiti
 })
 export class TableComponent {
   @ViewChild('filter') filter!: ElementRef;
-  @Input() data: DocumentType[] = [];
-
+  @Input() data: Income[] = [];
+  @Input() totalAmount: number
   public messages = messages;
   public labels = labels;
   public tittles = tittles;
   public buttons = buttons;
   public common = common;
-  public expenses!: DocumentType[];
-  public expense: DocumentType;
+  public expenses!: Income[];
+  public expense: Income;
   public columns: TableColumn[] = [];
-  public columnsToShow: string[] = ['name', 'description'];
+  public columnsToShow: string[] =['socialReason', 'documentNumber','description', 'amount','documentType', 'date'];
   public columnsStatus: TableColumn[] = [];
   public firstPage = 0;
   // public pageable: any
@@ -43,13 +43,13 @@ export class TableComponent {
   private searchSubject = new Subject<string>();
 
   constructor(
-    private documentTypesService: DocumentTypesService,
+    private incomesService: IncomesService,
     private helpersService: HelpersService,
     public filterService: FilterService
   ) { }
 
   ngOnInit() {
-    this.documentTypesService.triggerTable.emit(this);
+    this.incomesService.triggerTable.emit(this);
     this.initializeColumnInformation();
     this.initializeDefaultVariables();
     this.initializeDebounceSearch();
@@ -59,13 +59,19 @@ export class TableComponent {
     this.helpersService.translateChange('es');
   }
 
-  public getAmount(value :any) {
-    console.log(value);
-
-  }
-
   public formateDate(date: string) {
     return toYMDdateFormat(date);
+  }
+  public onDateRangeSelected(event: any) {
+    this.pageable.setPageableValues(event);
+    this.loadProgrammaticStructures
+  }
+  public filterByDateAndBudget()
+  {
+    this.pageable = new Pageable();
+    this.pageable.page = 0;
+    this.pageable.size = 10;
+    this.loadProgrammaticStructures
   }
 
   ngOnDestroy() {
@@ -75,11 +81,24 @@ export class TableComponent {
   public loadProgrammaticStructures(event: TableLazyLoadEvent) {
     const filters = fromTableLazyLoadFiltersToObject(event.filters)
     this.pageable.setPageableValues(event);
+    // this.createGrid(filters);
   }
 
+  // private createGrid(filters?: any) {
+  //   this.expensesService.findAll()
+  //     .subscribe((response: any) => {
+  //       this.expenses = response.content;
+  //       this.totalRecords = response.totalElements;
+  //     });
+  //   // this.expensesService.pageable(this.pageable, filters, this.globalFilter)
+  //   //   .subscribe((response: any) => {
+  //   //     this.budgetAuthorizations = response.content;
+  //   //     this.totalRecords = response.totalElements;
+  //   //   });
+  // }
 
   private initializeDefaultVariables() {
-    this.expense = new DocumentType();
+    this.expense = new Income();
     this.pageable = new Pageable();
     this.firstPage = 0;
   }
@@ -89,11 +108,11 @@ export class TableComponent {
   }
 
   public onRowUnselect(event: any) {
-    this.sendSelectedProgrammaticStructure(new DocumentType());
+    this.sendSelectedProgrammaticStructure(new Income());
   }
 
-  public sendSelectedProgrammaticStructure(documentType: DocumentType) {
-    this.documentTypesService.setSelectedData(documentType);
+  public sendSelectedProgrammaticStructure(ProgrammaticStructure: Income) {
+    this.incomesService.setSelectedData(ProgrammaticStructure);
   }
 
   public onSearch() {
@@ -107,7 +126,7 @@ export class TableComponent {
   }
 
   public reload() {
-    this.documentTypesService.setFilteredData(new DocumentType());
+    this.incomesService.setFilteredData(new Income());
   }
 
   public filterColumns(event: any) {
@@ -115,7 +134,7 @@ export class TableComponent {
   }
 
   private initializeColumnInformation() {
-    this.columns = TableColumnDefinitions.getDefaultDocumentTypeColumns()
+    this.columns = TableColumnDefinitions.getDefaultIncomeColumns()
     this.columnsStatus = this.initializeColumnsStatus();
   }
 
@@ -137,4 +156,5 @@ export class TableComponent {
 
     });
   }
+
 }

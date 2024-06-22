@@ -51,7 +51,6 @@ function getInputValue(inputElement: HTMLInputElement | HTMLSelectElement): stri
 }
 
 export const columnDateFilter = (value: string | null | undefined, filter: Date | null | undefined): boolean => {
-  console.log('INGRESA');
 
   value = toDMYdateFormat(value);
 

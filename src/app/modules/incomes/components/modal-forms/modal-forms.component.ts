@@ -2,21 +2,19 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { buttons, labels, tittles } from 'src/app/core/constants/labels';
 import { messages } from 'src/app/core/constants/messages';
-import { Expense } from 'src/app/core/model/expense';
+import { Income } from 'src/app/core/model/income';
 import { TableComponent } from '../table/table.component';
-import { ExpensesService } from '../../services/expenses.service';
+import { IncomesService } from '../../services/incomes.service';
+import { DocumentTypesService } from 'src/app/modules/document-types/services/document-types.service';
 import { HelpersService } from 'src/app/core/services/helpers.service';
 import { FormUtils } from 'src/app/core/utils/form-groups';
 import { catchError, of, tap } from 'rxjs';
-import { DocumentTypesService } from 'src/app/modules/document-types/services/document-types.service';
 import { DocumentType } from 'src/app/core/model/document-type';
-import { toYMDdateFormat } from 'src/app/core/utils/date-formats';
 
 @Component({
   selector: 'app-modal-forms',
   templateUrl: './modal-forms.component.html',
-  styleUrls: ['./modal-forms.component.scss'],
-  providers: [HelpersService]
+  styleUrls: ['./modal-forms.component.scss']
 })
 export class ModalFormsComponent {
 
@@ -28,26 +26,22 @@ export class ModalFormsComponent {
   public dialog: boolean = false;
   public submitted: boolean = false;
   public documentTypes: DocumentType[] = [];
-  private isIncomeTransaction: boolean = false;
-  private expense!: Expense;
+  private isIncomeTransaction:boolean =true;
+  private expense!: Income;
   private expenseResponse: any;
   private tableComponent!: TableComponent;
 
   constructor(
-    private expensesService: ExpensesService,
+    private incomesService: IncomesService,
     private documentTypesService: DocumentTypesService,
     private helpersService: HelpersService,
   ) { }
 
   ngOnInit() {
     this.waitForPSGroupSelection();
-    this.expensesService.trigger.emit(this);
+    this.incomesService.trigger.emit(this);
     this.registerTableComponentListener();
-    this.formPSGroups = FormUtils.getDefaultExpenseFormGroup();
-
-  }
-  ngAfterViewInit() {
-    this.helpersService.translateChange('es')
+    this.formPSGroups = FormUtils.getDefaultDocumentTypeFormGroup();
   }
 
   public openCreate() {
@@ -61,7 +55,7 @@ export class ModalFormsComponent {
     this.loadModels();
     this.tittleForm = tittles.edit;
     if (this.expenseResponse && this.expenseResponse.id) {
-      this.expensesService
+      this.incomesService
         .findById(parseInt(this.expenseResponse.id))
         .pipe(
           tap((expense: any) => {
@@ -84,28 +78,22 @@ export class ModalFormsComponent {
   public save() {
     this.submitted = true;
     if (this.formPSGroups.valid) {
-      this.formatDateBeforeSubmit();
       this.expense.id
         ? this.submit('update', this.expense.id)
         : this.submit('create');
     }
   }
 
-  private formatDateBeforeSubmit() {
-    this.formPSGroups.get('date')?.setValue(
-      new Date(toYMDdateFormat(this.formPSGroups.get('date')?.value))
-    );
-  }
-
   private submit(action: 'create' | 'update', expenseId?: number): void {
-    let data: Expense = {
+
+    let data: Income = {
       isIncome: this.isIncomeTransaction,
       ...this.formPSGroups.value,
     };
     const serviceObservable =
       action === 'create'
-        ? this.expensesService.create(data)
-        : this.expensesService.update(expenseId!, data);
+        ? this.incomesService.create(data)
+        : this.incomesService.update(expenseId!, data);
 
     serviceObservable
       .pipe(
@@ -122,7 +110,7 @@ export class ModalFormsComponent {
           this.reset();
         }),
         catchError((err) => {
-          return of('error', this.displayMessage('error', err.message));
+          return of('error', this.displayMessage('error', err[0]));
         })
       )
       .subscribe();
@@ -130,7 +118,7 @@ export class ModalFormsComponent {
 
   private reset(): void {
     this.formPSGroups = FormUtils.getDefaultExpenseFormGroup();
-    this.expense = new Expense();
+    this.expense = new Income();
   }
 
   private displayMessage(type: string, error: string) {
@@ -138,29 +126,29 @@ export class ModalFormsComponent {
   }
 
   private waitForPSGroupSelection() {
-    this.expensesService
+    this.incomesService
       .getSelectedData()
-      .subscribe((response: Expense) => {
+      .subscribe((response: Income) => {
         this.expenseResponse = response;
       });
   }
 
   private registerTableComponentListener() {
-    this.expensesService
+    this.incomesService
       .triggerTable
       .subscribe((tableComponent: TableComponent) => {
         this.tableComponent = tableComponent;
       });
   }
 
-  private updateFormValues(psGroup: Expense) {
+  private updateFormValues(psGroup: Income) {
     this.formPSGroups.patchValue(psGroup);
   }
 
-  private loadModels() {
-    this.documentTypesService.search().subscribe((documentTypes: DocumentType[]) => {
-      this.documentTypes = documentTypes;
-    }
+    private loadModels() {
+      this.documentTypesService.search().subscribe((documentTypes: DocumentType[]) => {
+        this.documentTypes = documentTypes;
+      }
     );
   }
 

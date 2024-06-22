@@ -38,25 +38,21 @@ export class ToolbarComponent {
   }
   private initializeModalsListeners() {
     this.expensesService.triggerTable.subscribe((response: Table) => {
-      console.log(response);
 
       this.tableComponent = response;
     });
 
     this.expensesService.triggerInfo.subscribe((response: ModalInformationComponent) => {
-      console.log(response);
 
       this.modalInfoComponent = response;
     });
 
     this.expensesService.triggerDelete.subscribe((response: ModalDeleteComponent) => {
-      console.log(response);
 
       this.modalDeleteComponent = response;
     });
 
     this.expensesService.trigger.subscribe((response: ModalFormsComponent) => {
-      console.log(response);
 
       this.modalFormComponent = response;
     });

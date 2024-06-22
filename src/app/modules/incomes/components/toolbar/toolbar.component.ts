@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { buttons } from 'src/app/core/constants/labels';
-import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/modal-delete.component';
-import { DocumentTypesService } from '../../services/document-types.service';
+import { IncomesService } from '../../services/incomes.service';
 import { ModalInformationComponent } from 'src/app/shared/components/modal-information/modal-information.component';
+import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/modal-delete.component';
 import { Table } from 'primeng/table';
 import { ModalFormsComponent } from '../modal-forms/modal-forms.component';
 
@@ -18,7 +18,7 @@ export class ToolbarComponent {
   public modalFormComponent: ModalFormsComponent;
   public modalDeleteComponent: ModalDeleteComponent;
 
-  constructor(private documentTypesService: DocumentTypesService) { }
+  constructor(private incomesService: IncomesService) { }
 
   ngOnInit(): void {
     this.initializeModalsListeners();
@@ -36,24 +36,22 @@ export class ToolbarComponent {
      this.modalInfoComponent.openInfo();
   }
   private initializeModalsListeners() {
-    this.documentTypesService.triggerTable.subscribe((response: Table) => {
-
+    this.incomesService.triggerTable.subscribe((response: Table) => {
       this.tableComponent = response;
     });
 
-    this.documentTypesService.triggerInfo.subscribe((response: ModalInformationComponent) => {
-
+    this.incomesService.triggerInfo.subscribe((response: ModalInformationComponent) => {
       this.modalInfoComponent = response;
     });
 
-    this.documentTypesService.triggerDelete.subscribe((response: ModalDeleteComponent) => {
-
+    this.incomesService.triggerDelete.subscribe((response: ModalDeleteComponent) => {
       this.modalDeleteComponent = response;
     });
 
-    this.documentTypesService.trigger.subscribe((response: ModalFormsComponent) => {
+    this.incomesService.trigger.subscribe((response: ModalFormsComponent) => {
       this.modalFormComponent = response;
     });
   }
+
 
 }

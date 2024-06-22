@@ -6,6 +6,8 @@ import { DocumentTypesModule } from './document-types.module';
 import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/modal-delete.component';
 import { ModalInformationComponent } from 'src/app/shared/components/modal-information/modal-information.component';
 import { HelpersService } from 'src/app/core/services/helpers.service';
+import { Subscription } from 'rxjs';
+import { DocumentType } from 'src/app/core/model/document-type';
 
 @Component({
   selector: 'app-document-types',
@@ -17,9 +19,9 @@ import { HelpersService } from 'src/app/core/services/helpers.service';
 })
 export default class DocumentTypesComponent {
   public headers = headers;
-  public data: any;
+  public data: DocumentType [];
   public columns: string[] = ['name', 'description'];
-
+  public subscriptions = new Subscription();
 
   constructor(
     public documentTypesService: DocumentTypesService
@@ -30,16 +32,20 @@ export default class DocumentTypesComponent {
     this.createGrid();
     this.retrieveReloadData();
   }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
   private createGrid(): void {
-  this.documentTypesService.findAll().subscribe((data) => {
+  this.documentTypesService.search().subscribe((data) => {
     this.data = data;
   });}
 
   private retrieveReloadData() {
-    this.documentTypesService.getFilteredData().subscribe((data) => {
+    this.subscriptions.add( this.documentTypesService.getFilteredData().subscribe((data) => {
       this.createGrid();
-    }
-    );
+    }));
   }
 
 }

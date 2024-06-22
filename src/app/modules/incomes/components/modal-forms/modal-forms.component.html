@@ -52,7 +52,7 @@
           >
           </app-form-control-error> -->
         </div>
-        <div class="form-group field md:col-6 ">
+        <div class="form-group field md:col-6">
           <label for="documentTypeId">{{ labels.documentType }} *</label>
           <p-dropdown
             inputId="documentTypeId"
@@ -66,11 +66,9 @@
             optionLabel="name"
             optionValue="id"
             [showClear]="false"
-
             [ngClass]="{
               'ng-invalid ng-dirty':
-                submitted &&
-                formPSGroups.controls['documentTypeId'].invalid
+                submitted && formPSGroups.controls['documentTypeId'].invalid
             }"
           >
           </p-dropdown>
@@ -91,7 +89,6 @@
             appendTo="body"
             placeholder="Seleccione la fecha "
             formControlName="date"
-            dateFormat="dd-mm-yy"
           >
           </p-calendar>
           <!-- <app-form-control-error
@@ -119,7 +116,6 @@
           >
           </app-form-control-error> -->
         </div>
-
 
         <div class="form-group field col-12">
           <label for="description">{{ labels.description }}</label>

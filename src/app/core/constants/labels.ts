@@ -1,3 +1,5 @@
+import { filter } from "rxjs";
+
 export const tittles = {
   store: 'Store',
   storeMannager: 'Gestion de Productos',
@@ -6,6 +8,7 @@ export const tittles = {
   DeleteProduct: 'Eliminar Producto',
   InfoProduct: 'Información del Producto',
   expenseManagement: 'Gestión de Gastos',
+  incomeManagement: 'Gestión de Ingresos',
   create: 'Crear',
   edit: 'Editar',
 };
@@ -13,6 +16,7 @@ export const tittles = {
 export const labels: any = {
   total: 'Total',
   name: 'Nombre',
+  socialReason: 'Razón Social',
   description: 'Descripción',
   price: 'Precio',
   category: 'Categoria',
@@ -27,10 +31,11 @@ export const labels: any = {
   export: 'Exportar',
   reload: 'Actualizar',
   addToInventary: 'Agregar al inventario',
-  amount: 'Cantidad',
+  amount: 'Monto',
   date: 'Fecha',
   required: 'Campo requerido',
   documentType: 'Tipo de documento',
+  documentNumber: 'Numero de documento',
 }
 
 export const buttons: any = {
@@ -44,6 +49,7 @@ export const buttons: any = {
   export: 'Exportar',
   reload: 'Actualizar',
   search: 'Buscar',
+  filter: 'Filtrar',
   expand: 'Mas información'
 }
 
@@ -58,9 +64,9 @@ export const tooltip: any = {
 }
 
 
-export const headers  = {
-  expenses: 'Gastos',
+export const headers = {
+  expenses: 'Egresos',
   income: 'Ingresos',
   reports: 'Reportes',
-documentTypes: 'Tipos de Documentos',
+  documentTypes: 'Tipos de Documentos',
 }

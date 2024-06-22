@@ -7,6 +7,7 @@ import { HelpersService } from 'src/app/core/services/helpers.service';
 import { TranslateLoader, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { ModalInformationComponent } from 'src/app/shared/components/modal-information/modal-information.component';
 import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/modal-delete.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-expenses',
@@ -19,8 +20,10 @@ import { ModalDeleteComponent } from 'src/app/shared/components/modal-delete/mod
 export default class ExpensesComponent {
   public headers = headers;
   public data: any;
-  public columns: string[] = ['name', 'description', 'amount','documenType', 'date'];
-
+  public totalAmount: number = 0;
+  public columns: string[] = ['socialReason', 'documentNumber','description', 'amount','documentType', 'date'];
+  public subcxriptions = new Subscription();
+  private isIncomeTransaction:boolean =false;
 
   constructor(
     public expensesService: ExpensesService
@@ -30,16 +33,27 @@ export default class ExpensesComponent {
     this.createGrid();
     this.retrieveReloadData();
   }
+
+  ngOnDestroy(): void {
+    this.subcxriptions.unsubscribe();
+  }
   private createGrid(): void {
-  this.expensesService.findAll().subscribe((data) => {
+  this.expensesService.search(this.isIncomeTransaction).subscribe((data) => {
     this.data = data;
+    this.getTotalAmount();
   });}
 
   private retrieveReloadData() {
-    this.expensesService.getFilteredData().subscribe((data) => {
+    this.subcxriptions.add( this.expensesService.getFilteredData().subscribe((data) => {
       this.createGrid();
-    }
+    })
     );
+  }
+  private getTotalAmount() {
+    this.totalAmount = this.data.reduce((acc: number, expense: any) => {
+      return acc + expense.amount;
+    }, 0);
+
   }
 
 }

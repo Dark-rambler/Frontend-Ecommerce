@@ -1,25 +1,8 @@
 <p-toolbar class="option-menu">
   <ng-template pTemplate="left">
-    <h5>{{ tittles.expenseManagement }}</h5>
+    <h5>Gestion de documentos comprobantes</h5>
   </ng-template>
   <ng-template pTemplate="right">
-    <p-multiSelect
-      [options]="columns"
-      [(ngModel)]="columnsStatus"
-      [placeholder]="messages.selectionColumns"
-      (onChange)="filterColumns($event.value)"
-      optionLabel="header"
-      dropdownIcon="pi pi-cog"
-      display="chip"
-      [pTooltip]="messages.selectionColumns"
-      tooltipPosition="top"
-    >
-      <ng-template let-option pTemplate="item">
-        <div class="p-multiselect-representative-option w-15rem">
-          <span class="ml-1">{{ option.header }}</span>
-        </div>
-      </ng-template>
-    </p-multiSelect>
     <div class="flex mt-1">
       <button
         pButton
@@ -117,7 +100,9 @@
               matchMode="contains"
               [showOperator]="false"
               [showAddButton]="false"
-              [showMatchModes]="false">
+              [showMatchModes]="false"
+              >
+             
             </p-columnFilter>
           </ng-template>
           <ng-template [ngSwitchCase]="columnFilterType.DATE">

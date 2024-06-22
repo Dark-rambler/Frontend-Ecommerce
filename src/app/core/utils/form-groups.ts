@@ -15,7 +15,28 @@ export class FormUtils {
   static getDefaultExpenseFormGroup():FormGroup{
     return new FormGroup({
       id: new FormControl(''),
+      socialReason: new FormControl('', [Validators.required]),
+      documentNumber: new FormControl('', [Validators.required]),
+      description: new FormControl('', ),
+      amount: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
+      documentTypeId : new FormControl('', [Validators.required]),
+    })
+  }
+
+  static getDefaultDocumentTypeFormGroup():FormGroup{
+    return new FormGroup({
+      id: new FormControl(''),
       name: new FormControl('', [Validators.required]),
+      description: new FormControl('', ),
+    })
+  }
+
+  static getDefaultIncomeFormGroup():FormGroup{
+    return new FormGroup({
+      id: new FormControl(''),
+      socialReason: new FormControl('', [Validators.required]),
+      documentNumber: new FormControl('', [Validators.required]),
       description: new FormControl('', ),
       amount: new FormControl('', [Validators.required]),
       date: new FormControl('', [Validators.required]),

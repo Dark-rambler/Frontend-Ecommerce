@@ -1,8 +1,7 @@
 <p-toolbar class="option-menu">
   <ng-template pTemplate="left">
-    <h5>{{ tittles.expenseManagement }}</h5>
+    <h5>{{ tittles.incomeManagement }}</h5>
   </ng-template>
-
   <ng-template pTemplate="right">
     <div [formGroup]="">
 
@@ -28,40 +27,43 @@
         tooltipPosition="top"
       ></button>
     </div>
+    <div class="flex mt-1">
+      <button
+        pButton
+        pRipple
+        class="p-button-outlined p-button-secondary mx-2"
+        icon="pi pi-filter-slash"
+        (click)="clear( dt1)"
+        [pTooltip]="buttons.clear"
+        tooltipPosition="top"
+      ></button>
 
-    <button
-      pButton
-      class="p-button-outlined p-button-secondary mx-2"
-      icon="pi pi-filter-slash"
-      [pTooltip]="buttons.clear"
-      tooltipPosition="top"
-      (click)="clear( dt1)"
-    ></button>
-    <div class="text-right">
-      <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          type="text"
-          #filter
-          (input)="onGlobalFilter(dt1, $event)"
-          placeholder="Buscar en la vista actual"
-          [placeholder]="messages.searchCurrentView"
-          class="w-full"
-        />
-      </span>
+      <div class="text-right">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            #filter
+            id="search"
+            (input)="onSearch()"
+            [(ngModel)]="globalFilter"
+            placeholder="Buscar en la vista actual"
+            class="w-full"
+          />
+        </span>
+      </div>
+
+      <button
+        pButton
+        pRipple
+        class="p-button-outlined p-button-secondary ml-2"
+        icon="pi pi-sync"
+        (click)="reload()"
+        [pTooltip]="buttons.reload"
+        tooltipPosition="top"
+      ></button>
     </div>
-
-    <button
-      pButton
-      pRipple
-      type="button"
-      icon="pi pi-sync"
-      class="p-button-outlined p-button-secondary ml-2"
-      (click)="reload()"
-      [pTooltip]="buttons.reload"
-      tooltipPosition="top"
-    ></button>
   </ng-template>
 </p-toolbar>
 <p-table
@@ -134,6 +136,7 @@
               [showApplyButton]="false"
               [showOperator]="false"
               [showAddButton]="false"
+
             >
               <ng-template
                 pTemplate="filter"
@@ -144,6 +147,7 @@
                   #calendar
                   [ngModel]="value"
                   (onSelect)="filter(formateDate(calendar.value))"
+                  dateFormat="dd/mm/yy"
                 ></p-calendar> -->
               </ng-template>
             </p-columnFilter>
@@ -153,23 +157,10 @@
       </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-budgetAuthorization rowIndex="rowIndex">
-    <tr [pSelectableRow]="budgetAuthorization">
-      <td
-        *ngFor="let col of columns"
-        [hidden]="!columnsToShow.includes(col.field)"
-      >
-        {{
-          budgetAuthorization[col.field]
-        }}
-      </td>
-    </tr>
-  </ng-template>
-
   <ng-template pTemplate="footer">
     <tr>
       <td>
-        Total Gastos
+        Total Ingresos
       </td>
       <td colspan="8" class="text-right pr-4" >
         {{ totalAmount }}	Bs
@@ -178,6 +169,23 @@
   </ng-template>
 
 
+  <ng-template pTemplate="body" let-budgetAuthorization rowIndex="rowIndex">
+    <tr [pSelectableRow]="budgetAuthorization">
+      <td
+        *ngFor="let col of columns"
+        [hidden]="!columnsToShow.includes(col.field)"
+      >
+      {{
+       budgetAuthorization[col.field]
+      }}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="8">{{ messages.emptyMessage }}</td>
+    </tr>
+  </ng-template>
   <ng-template pTemplate="loadingbody">
     <tr>
       <td colspan="8">{{ messages.loadingRegisters }}</td>
