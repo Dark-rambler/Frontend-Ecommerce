@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Observable, catchError } from 'rxjs';
 import { environment } from 'src/app/core/enviroments/enviroment.development';
 import { DocumentType } from 'src/app/core/model/document-type';
 import { HttpService } from 'src/app/core/services/http.service';
@@ -15,5 +16,10 @@ export class DocumentTypesService extends HttpService<DocumentType>{
 
   constructor(protected override http: HttpClient) {
     super(http, `${environment.systemUrl}/documentType`);
+  }
+
+  search ():Observable<DocumentType[]> {
+    return this.http.get<DocumentType[]> (`${this.url}/search`)
+    .pipe(catchError(this.handleError));
   }
 }

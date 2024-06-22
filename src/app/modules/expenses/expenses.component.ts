@@ -20,8 +20,10 @@ import { Subscription } from 'rxjs';
 export default class ExpensesComponent {
   public headers = headers;
   public data: any;
-  public columns: string[] = ['name', 'description', 'amount','documenType', 'date'];
+  public totalAmount: number = 0;
+  public columns: string[] = ['socialReason', 'documentNumber','description', 'amount','documentType', 'date'];
   public subcxriptions = new Subscription();
+  private isIncomeTransaction:boolean =false;
 
   constructor(
     public expensesService: ExpensesService
@@ -36,8 +38,9 @@ export default class ExpensesComponent {
     this.subcxriptions.unsubscribe();
   }
   private createGrid(): void {
-  this.expensesService.findAll().subscribe((data) => {
+  this.expensesService.search(this.isIncomeTransaction).subscribe((data) => {
     this.data = data;
+    this.getTotalAmount();
   });}
 
   private retrieveReloadData() {
@@ -45,6 +48,12 @@ export default class ExpensesComponent {
       this.createGrid();
     })
     );
+  }
+  private getTotalAmount() {
+    this.totalAmount = this.data.reduce((acc: number, expense: any) => {
+      return acc + expense.amount;
+    }, 0);
+
   }
 
 }

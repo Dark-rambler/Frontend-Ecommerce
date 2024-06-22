@@ -12,19 +12,39 @@
         <div hidden class="form-group field">
           <input type="text" pInputText id="id" formControlName="id" />
         </div>
-        <div class="form-group field md:col-6">
-          <label for="name">{{ labels.name }} *</label>
+        <div class="form-group field md:col-12">
+          <label for="socialReason">{{ labels.socialReason }} *</label>
           <input
             type="text"
             pInputText
-            id="name"
+            id="socialReason"
             required
             autofocus
             [ngClass]="{
               'ng-invalid ng-dirty':
-                submitted && formPSGroups.controls['name'].invalid
+                submitted && formPSGroups.controls['socialReason'].invalid
             }"
-            formControlName="name"
+            formControlName="socialReason"
+          />
+          <!-- <app-form-control-error
+            [control]="formPSGroups.get('name')"
+            [submitted]="submitted"
+          >
+          </app-form-control-error> -->
+        </div>
+        <div class="form-group field md:col-6">
+          <label for="documentNumber">{{ labels.documentNumber }} *</label>
+          <input
+            type="text"
+            pInputText
+            id="documentNumber"
+            required
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted && formPSGroups.controls['documentNumber'].invalid
+            }"
+            formControlName="documentNumber"
           />
           <!-- <app-form-control-error
             [control]="formPSGroups.get('name')"
@@ -41,16 +61,16 @@
             [options]="documentTypes"
             formControlName="documentTypeId"
             [autoDisplayFirst]="false"
-            [filter]="true"
+            [filter]="false"
             filterBy="name"
             optionLabel="name"
             optionValue="id"
-            [showClear]="true"
+            [showClear]="false"
 
             [ngClass]="{
               'ng-invalid ng-dirty':
                 submitted &&
-                formPSGroups.controls['auxiliaryId'].invalid
+                formPSGroups.controls['documentTypeId'].invalid
             }"
           >
           </p-dropdown>
@@ -67,9 +87,11 @@
             class="m-1"
             [readonlyInput]="true"
             [showIcon]="true"
-            [showClear]="true"
-            placeholder="Seleccione fecha de finalizacion"
+            [showClear]="false"
+            appendTo="body"
+            placeholder="Seleccione la fecha "
             formControlName="date"
+            dateFormat="dd-mm-yy"
           >
           </p-calendar>
           <!-- <app-form-control-error
@@ -78,7 +100,7 @@
           ></app-form-control-error> -->
         </div>
         <div class="form-group field md:col-6">
-          <label for="amount">{{ labels.total }} *</label>
+          <label for="amount">{{ labels.amount }} *</label>
           <input
             type="text"
             pInputText

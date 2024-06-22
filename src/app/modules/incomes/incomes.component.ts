@@ -20,8 +20,10 @@ import { Income } from 'src/app/core/model/income';
 export default class IncomesComponent {
   public headers = headers;
   public data: Income [];
-  public columns: string[] = ['name', 'description', 'amount','documenType', 'date'];
+  public totalAmount: number = 0;
+  public columns: string[] = ['socialReason', 'documentNumber','description', 'amount','documentType', 'date'];
   public subcxriptions = new Subscription();
+  private isIncomeTransaction:boolean =true;
 
   constructor(
     public incomesService: IncomesService
@@ -36,8 +38,9 @@ export default class IncomesComponent {
     this.subcxriptions.unsubscribe();
   }
   private createGrid(): void {
-  this.incomesService.findAll().subscribe((data) => {
+  this.incomesService.search(this.isIncomeTransaction).subscribe((data) => {
     this.data = data;
+    this.getTotalAmount();
   });}
 
   private retrieveReloadData() {
@@ -45,5 +48,11 @@ export default class IncomesComponent {
       this.createGrid();
     })
     );
+  }
+  private getTotalAmount() {
+    this.totalAmount = this.data.reduce((acc: number, expense: any) => {
+      return acc + expense.amount;
+    }, 0);
+
   }
 }

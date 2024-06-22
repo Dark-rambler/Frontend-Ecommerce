@@ -26,6 +26,7 @@ export class ModalFormsComponent {
   public dialog: boolean = false;
   public submitted: boolean = false;
   public documentTypes: DocumentType[] = [];
+  private isIncomeTransaction:boolean =true;
   private expense!: Income;
   private expenseResponse: any;
   private tableComponent!: TableComponent;
@@ -41,7 +42,6 @@ export class ModalFormsComponent {
     this.incomesService.trigger.emit(this);
     this.registerTableComponentListener();
     this.formPSGroups = FormUtils.getDefaultDocumentTypeFormGroup();
-
   }
 
   public openCreate() {
@@ -87,6 +87,7 @@ export class ModalFormsComponent {
   private submit(action: 'create' | 'update', expenseId?: number): void {
 
     let data: Income = {
+      isIncome: this.isIncomeTransaction,
       ...this.formPSGroups.value,
     };
     const serviceObservable =
@@ -109,7 +110,7 @@ export class ModalFormsComponent {
           this.reset();
         }),
         catchError((err) => {
-          return of('error', this.displayMessage('error', err.message));
+          return of('error', this.displayMessage('error', err[0]));
         })
       )
       .subscribe();
@@ -145,7 +146,7 @@ export class ModalFormsComponent {
   }
 
     private loadModels() {
-      this.documentTypesService.findAll().subscribe((documentTypes: DocumentType[]) => {
+      this.documentTypesService.search().subscribe((documentTypes: DocumentType[]) => {
         this.documentTypes = documentTypes;
       }
     );

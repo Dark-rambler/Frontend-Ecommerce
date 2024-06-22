@@ -23,7 +23,7 @@ import { TableColumnDefinitions } from 'src/app/core/utils/table-column-definiti
 export class TableComponent {
   @ViewChild('filter') filter!: ElementRef;
   @Input() data: Income[] = [];
-
+  @Input() totalAmount: number
   public messages = messages;
   public labels = labels;
   public tittles = tittles;
@@ -32,7 +32,7 @@ export class TableComponent {
   public expenses!: Income[];
   public expense: Income;
   public columns: TableColumn[] = [];
-  public columnsToShow: string[] = ['name', 'amount', 'description','documentTypeName', 'date'];
+  public columnsToShow: string[] =['socialReason', 'documentNumber','description', 'amount','documentType', 'date'];
   public columnsStatus: TableColumn[] = [];
   public firstPage = 0;
   // public pageable: any
@@ -61,6 +61,17 @@ export class TableComponent {
 
   public formateDate(date: string) {
     return toYMDdateFormat(date);
+  }
+  public onDateRangeSelected(event: any) {
+    this.pageable.setPageableValues(event);
+    this.loadProgrammaticStructures
+  }
+  public filterByDateAndBudget()
+  {
+    this.pageable = new Pageable();
+    this.pageable.page = 0;
+    this.pageable.size = 10;
+    this.loadProgrammaticStructures
   }
 
   ngOnDestroy() {

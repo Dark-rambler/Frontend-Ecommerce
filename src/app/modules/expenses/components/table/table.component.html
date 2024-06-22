@@ -2,61 +2,66 @@
   <ng-template pTemplate="left">
     <h5>{{ tittles.expenseManagement }}</h5>
   </ng-template>
+
   <ng-template pTemplate="right">
-    <p-multiSelect
-      [options]="columns"
-      [(ngModel)]="columnsStatus"
-      [placeholder]="messages.selectionColumns"
-      (onChange)="filterColumns($event.value)"
-      optionLabel="header"
-      dropdownIcon="pi pi-cog"
-      display="chip"
-      [pTooltip]="messages.selectionColumns"
-      tooltipPosition="top"
-    >
-      <ng-template let-option pTemplate="item">
-        <div class="p-multiselect-representative-option w-15rem">
-          <span class="ml-1">{{ option.header }}</span>
-        </div>
-      </ng-template>
-    </p-multiSelect>
-    <div class="flex mt-1">
+    <div [formGroup]="">
+
+      <p-calendar
+        class="w-2"
+        class="m-1"
+        (onSelect)="onDateRangeSelected($event)"
+        [readonlyInput]="true"
+        [showIcon]="true"
+        [showClear]="false"
+        selectionMode="range"
+        placeholder="Seleccione un rango de tiempo"
+        dateFormat="dd/mm/yy"
+      >
+      </p-calendar>
       <button
         pButton
-        pRipple
-        class="p-button-outlined p-button-secondary mx-2"
-        icon="pi pi-filter-slash"
-        (click)="clear( dt1)"
-        [pTooltip]="buttons.clear"
-        tooltipPosition="top"
-      ></button>
-
-      <div class="text-right">
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input
-            pInputText
-            type="text"
-            #filter
-            id="search"
-            (input)="onSearch()"
-            [(ngModel)]="globalFilter"
-            placeholder="Buscar en la vista actual"
-            class="w-full"
-          />
-        </span>
-      </div>
-
-      <button
-        pButton
-        pRipple
-        class="p-button-outlined p-button-secondary ml-2"
-        icon="pi pi-sync"
-        (click)="reload()"
-        [pTooltip]="buttons.reload"
+        type="button"
+        (click)="filterByDateAndBudget()"
+        icon="pi pi-filter-fill"
+        class="p-button-outlined p-button-secondary mx-1"
+        [pTooltip]="buttons.filter"
         tooltipPosition="top"
       ></button>
     </div>
+
+    <button
+      pButton
+      class="p-button-outlined p-button-secondary mx-2"
+      icon="pi pi-filter-slash"
+      [pTooltip]="buttons.clear"
+      tooltipPosition="top"
+      (click)="clear( dt1)"
+    ></button>
+    <div class="text-right">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          #filter
+          (input)="onGlobalFilter(dt1, $event)"
+          placeholder="Buscar en la vista actual"
+          [placeholder]="messages.searchCurrentView"
+          class="w-full"
+        />
+      </span>
+    </div>
+
+    <button
+      pButton
+      pRipple
+      type="button"
+      icon="pi pi-sync"
+      class="p-button-outlined p-button-secondary ml-2"
+      (click)="reload()"
+      [pTooltip]="buttons.reload"
+      tooltipPosition="top"
+    ></button>
   </ng-template>
 </p-toolbar>
 <p-table
@@ -129,7 +134,6 @@
               [showApplyButton]="false"
               [showOperator]="false"
               [showAddButton]="false"
-
             >
               <ng-template
                 pTemplate="filter"
@@ -140,7 +144,6 @@
                   #calendar
                   [ngModel]="value"
                   (onSelect)="filter(formateDate(calendar.value))"
-                  dateFormat="dd/mm/yy"
                 ></p-calendar> -->
               </ng-template>
             </p-columnFilter>
@@ -157,18 +160,24 @@
         [hidden]="!columnsToShow.includes(col.field)"
       >
         {{
-          col.data
-            ? (budgetAuthorization[col.field] | date : col.format)
-            : budgetAuthorization[col.field]
+          budgetAuthorization[col.field]
         }}
       </td>
     </tr>
   </ng-template>
-  <ng-template pTemplate="emptymessage">
+
+  <ng-template pTemplate="footer">
     <tr>
-      <td colspan="8">{{ messages.emptyMessage }}</td>
+      <td>
+        Total Gastos
+      </td>
+      <td colspan="8" class="text-right pr-4" >
+        {{ totalAmount }}	Bs
+      </td>
     </tr>
   </ng-template>
+
+
   <ng-template pTemplate="loadingbody">
     <tr>
       <td colspan="8">{{ messages.loadingRegisters }}</td>

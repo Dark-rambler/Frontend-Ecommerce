@@ -3,23 +3,30 @@
     <h5>{{ tittles.incomeManagement }}</h5>
   </ng-template>
   <ng-template pTemplate="right">
-    <p-multiSelect
-      [options]="columns"
-      [(ngModel)]="columnsStatus"
-      [placeholder]="messages.selectionColumns"
-      (onChange)="filterColumns($event.value)"
-      optionLabel="header"
-      dropdownIcon="pi pi-cog"
-      display="chip"
-      [pTooltip]="messages.selectionColumns"
-      tooltipPosition="top"
-    >
-      <ng-template let-option pTemplate="item">
-        <div class="p-multiselect-representative-option w-15rem">
-          <span class="ml-1">{{ option.header }}</span>
-        </div>
-      </ng-template>
-    </p-multiSelect>
+    <div [formGroup]="">
+
+      <p-calendar
+        class="w-2"
+        class="m-1"
+        (onSelect)="onDateRangeSelected($event)"
+        [readonlyInput]="true"
+        [showIcon]="true"
+        [showClear]="false"
+        selectionMode="range"
+        placeholder="Seleccione un rango de tiempo"
+        dateFormat="dd/mm/yy"
+      >
+      </p-calendar>
+      <button
+        pButton
+        type="button"
+        (click)="filterByDateAndBudget()"
+        icon="pi pi-filter-fill"
+        class="p-button-outlined p-button-secondary mx-1"
+        [pTooltip]="buttons.filter"
+        tooltipPosition="top"
+      ></button>
+    </div>
     <div class="flex mt-1">
       <button
         pButton
@@ -150,17 +157,27 @@
       </th>
     </tr>
   </ng-template>
+  <ng-template pTemplate="footer">
+    <tr>
+      <td>
+        Total Ingresos
+      </td>
+      <td colspan="8" class="text-right pr-4" >
+        {{ totalAmount }}	Bs
+      </td>
+    </tr>
+  </ng-template>
+
+
   <ng-template pTemplate="body" let-budgetAuthorization rowIndex="rowIndex">
     <tr [pSelectableRow]="budgetAuthorization">
       <td
         *ngFor="let col of columns"
         [hidden]="!columnsToShow.includes(col.field)"
       >
-        {{
-          col.data
-            ? (budgetAuthorization[col.field] | date : col.format)
-            : budgetAuthorization[col.field]
-        }}
+      {{
+       budgetAuthorization[col.field]
+      }}
       </td>
     </tr>
   </ng-template>

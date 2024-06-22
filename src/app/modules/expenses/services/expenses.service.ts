@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Observable, catchError } from 'rxjs';
 import { environment } from 'src/app/core/enviroments/enviroment.development';
 import { Expense } from 'src/app/core/model/expense';
 import { HttpService } from 'src/app/core/services/http.service';
@@ -15,8 +16,12 @@ export class ExpensesService extends HttpService<Expense >{
   @Output() triggerTable: EventEmitter<any> = new EventEmitter();
 
   constructor(protected override http: HttpClient) {
-    super(http, `${environment.systemUrl}/expenses`);
+    super(http, `${environment.systemUrl}/transaction`);
   }
-
-
+  public search(isIncome:boolean):Observable<Expense[]>{
+    return this.http.get<Expense[]>(`${this.url}/search?`
+    +`isIncome=${isIncome}`).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

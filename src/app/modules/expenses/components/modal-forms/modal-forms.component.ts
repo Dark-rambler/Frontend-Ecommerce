@@ -10,11 +10,13 @@ import { FormUtils } from 'src/app/core/utils/form-groups';
 import { catchError, of, tap } from 'rxjs';
 import { DocumentTypesService } from 'src/app/modules/document-types/services/document-types.service';
 import { DocumentType } from 'src/app/core/model/document-type';
+import { toYMDdateFormat } from 'src/app/core/utils/date-formats';
 
 @Component({
   selector: 'app-modal-forms',
   templateUrl: './modal-forms.component.html',
-  styleUrls: ['./modal-forms.component.scss']
+  styleUrls: ['./modal-forms.component.scss'],
+  providers: [HelpersService]
 })
 export class ModalFormsComponent {
 
@@ -26,6 +28,7 @@ export class ModalFormsComponent {
   public dialog: boolean = false;
   public submitted: boolean = false;
   public documentTypes: DocumentType[] = [];
+  private isIncomeTransaction: boolean = false;
   private expense!: Expense;
   private expenseResponse: any;
   private tableComponent!: TableComponent;
@@ -40,8 +43,11 @@ export class ModalFormsComponent {
     this.waitForPSGroupSelection();
     this.expensesService.trigger.emit(this);
     this.registerTableComponentListener();
-    this.formPSGroups = FormUtils.getDefaultDocumentTypeFormGroup();
+    this.formPSGroups = FormUtils.getDefaultExpenseFormGroup();
 
+  }
+  ngAfterViewInit() {
+    this.helpersService.translateChange('es')
   }
 
   public openCreate() {
@@ -78,15 +84,22 @@ export class ModalFormsComponent {
   public save() {
     this.submitted = true;
     if (this.formPSGroups.valid) {
+      this.formatDateBeforeSubmit();
       this.expense.id
         ? this.submit('update', this.expense.id)
         : this.submit('create');
     }
   }
 
-  private submit(action: 'create' | 'update', expenseId?: number): void {
+  private formatDateBeforeSubmit() {
+    this.formPSGroups.get('date')?.setValue(
+      new Date(toYMDdateFormat(this.formPSGroups.get('date')?.value))
+    );
+  }
 
+  private submit(action: 'create' | 'update', expenseId?: number): void {
     let data: Expense = {
+      isIncome: this.isIncomeTransaction,
       ...this.formPSGroups.value,
     };
     const serviceObservable =
@@ -144,10 +157,10 @@ export class ModalFormsComponent {
     this.formPSGroups.patchValue(psGroup);
   }
 
-    private loadModels() {
-      this.documentTypesService.findAll().subscribe((documentTypes: DocumentType[]) => {
-        this.documentTypes = documentTypes;
-      }
+  private loadModels() {
+    this.documentTypesService.search().subscribe((documentTypes: DocumentType[]) => {
+      this.documentTypes = documentTypes;
+    }
     );
   }
 

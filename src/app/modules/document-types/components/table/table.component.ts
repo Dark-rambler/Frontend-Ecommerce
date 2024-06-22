@@ -59,6 +59,11 @@ export class TableComponent {
     this.helpersService.translateChange('es');
   }
 
+  public getAmount(value :any) {
+    console.log(value);
+
+  }
+
   public formateDate(date: string) {
     return toYMDdateFormat(date);
   }
@@ -110,7 +115,7 @@ export class TableComponent {
   }
 
   private initializeColumnInformation() {
-    this.columns = TableColumnDefinitions.getDefaultExpenseColumns()
+    this.columns = TableColumnDefinitions.getDefaultDocumentTypeColumns()
     this.columnsStatus = this.initializeColumnsStatus();
   }
 

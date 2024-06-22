@@ -103,7 +103,7 @@ export class ModalFormsComponent {
           this.reset();
         }),
         catchError((err) => {
-          return of('error', this.displayMessage('error', err.message));
+          return of('error', this.displayMessage('error', err[0]));
         })
       )
       .subscribe();

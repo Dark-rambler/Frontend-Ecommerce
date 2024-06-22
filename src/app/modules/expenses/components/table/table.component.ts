@@ -24,6 +24,7 @@ import { TableColumnDefinitions } from 'src/app/core/utils/table-column-definiti
 export class TableComponent {
   @ViewChild('filter') filter!: ElementRef;
   @Input() data: Expense[] = [];
+  @Input() totalAmount: number = 0;
 
   public messages = messages;
   public labels = labels;
@@ -33,9 +34,10 @@ export class TableComponent {
   public expenses!: Expense[];
   public expense: Expense;
   public columns: TableColumn[] = [];
-  public columnsToShow: string[] = ['name', 'amount', 'description','documentTypeName', 'date'];
+  public columnsToShow: string[] = ['socialReason', 'documentNumber','description', 'amount','documentType', 'date'];
   public columnsStatus: TableColumn[] = [];
   public firstPage = 0;
+  budgetItemTypes: any = ['ingresos', 'egresos'];
   // public pageable: any
   public pageable: Pageable
   public totalRecords: number;
@@ -58,6 +60,13 @@ export class TableComponent {
 
   ngAfterViewInit() {
     this.helpersService.translateChange('es');
+
+  }
+  ngAfterContentInit(): void {
+    //Called after ngOnInit when the component's or directive's content has been initialized.
+    //Add 'implements AfterContentInit' to the class.
+    this.getTotalAmount();
+
   }
 
   public formateDate(date: string) {
@@ -73,7 +82,23 @@ export class TableComponent {
     this.pageable.setPageableValues(event);
     // this.createGrid(filters);
   }
+  public onDateRangeSelected(event: any) {
+    this.pageable.setPageableValues(event);
+    this.loadProgrammaticStructures
+  }
 
+  public filterByDateAndBudget()
+  {
+    this.pageable = new Pageable();
+    this.pageable.page = 0;
+    this.pageable.size = 10;
+    this.loadProgrammaticStructures
+  }
+
+  public getAmount(value :any) {
+    console.log(value);
+
+  }
   // private createGrid(filters?: any) {
   //   this.expensesService.findAll()
   //     .subscribe((response: any) => {
@@ -91,6 +116,12 @@ export class TableComponent {
     this.expense = new Expense();
     this.pageable = new Pageable();
     this.firstPage = 0;
+  }
+
+  public onGlobalFilter( table: any,event: any) {
+    this.globalFilter = event.target.value;
+    table.filterGlobal(this.globalFilter, 'contains');
+    // this.createGrid();
   }
 
   public onRowSelect(event: any) {
@@ -145,6 +176,9 @@ export class TableComponent {
       // this.createGrid();
 
     });
+  }
+  private getTotalAmount() {
+    console.log(this.data);
   }
 
 }

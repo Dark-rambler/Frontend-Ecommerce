@@ -1,10 +1,6 @@
-*{
-  font-family: 'Roboto', sans-serif;
-}
+$gutter: 1rem;
 
-.layout-main{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0 90px;
-}
+@import "../Layout/customStyles/calendar.scss";
+@import "../Layout/customStyles/layout.scss";
+
+
