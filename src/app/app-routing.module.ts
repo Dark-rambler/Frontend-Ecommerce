@@ -16,6 +16,10 @@ const routes: Routes = [{
   path : 'incomes',
   loadComponent: () => import('./modules/incomes/incomes.component')
 },
+{
+  path: 'reports',
+  loadComponent: () => import('./modules/reports/reports.component')
+},
 ];
 
 @NgModule({
