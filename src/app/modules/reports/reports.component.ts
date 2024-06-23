@@ -3,19 +3,25 @@ import { ReportsService } from './services/reports.service';
 import { headers } from 'src/app/core/constants/labels';
 import { Subscription } from 'rxjs';
 import { defaultDate, toYMDdateFormat } from 'src/app/core/utils/date-formats';
+import { ReportsModule } from './reports.module';
+import { Report } from 'src/app/core/model/report';
 
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.scss'],
-  standalone: true
+  standalone: true,
+  imports: [ReportsModule],
 })
 export default class ReportsComponent {
   public headers = headers;
-  public data: Report ;
+  public data: Report
   public totalAmount: number = 0;
-  public columns: string[] = ['socialReason', 'documentNumber','description', 'amount','documentType', 'date'];
+  public totalData: any = [];
+  public columns: string[] = ['socialReason', 'documentNumber', 'amount','movementType', 'date'];
   public subcxriptions = new Subscription();
+  public startDate: any = "2024-03-01T10:00"
+  public endDate: any = "2024-06-30T10:00"
   private isIncomeTransaction:boolean =true;
 
   constructor(
@@ -31,10 +37,20 @@ export default class ReportsComponent {
     this.subcxriptions.unsubscribe();
   }
   private createGrid(): void {
-  this.reportsService.getSummary( new Date(toYMDdateFormat(defaultDate())), new Date(toYMDdateFormat(defaultDate()))).subscribe((data) => {
-    console.log(data);
+  this.reportsService.getSummary( this.startDate, this.endDate).subscribe((data) => {
+    this.data = data;
+    this.formatData()
 
   });}
+  private formatData(){
+    this.totalData = [...this.data.incomes, ...this.data.expenses];
+    this.totalData = this.totalData.map((item: any) => {
+       item.isIncome ? item.income = item.amount : item.expense = item.amount;
+      return item;
+    });
+    console.log(this.totalData);
+
+  }
 
   private retrieveReloadData() {
     this.subcxriptions.add( this.reportsService.getFilteredData().subscribe((data) => {

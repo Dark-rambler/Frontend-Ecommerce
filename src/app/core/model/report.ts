@@ -7,5 +7,5 @@ export class Report extends Base {
   expenses: Expense[] = [];
   totalIncome: number = 0.0;
   totalExpense: number = 0.0;
-  balanc: number = 0.0;
+  balance: number = 0.0;
 }

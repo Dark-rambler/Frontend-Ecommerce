@@ -107,4 +107,39 @@ export class TableColumnDefinitions {
       }
     ]
   }
+  static getDefaultReportColumns(): TableColumn[] {
+    return [
+      {
+        field: 'socialReason',
+        header: labels.socialReason,
+        type: ColumnFilterType.TEXT,
+        columnType: TableColumnType.TEXT,
+      },
+      {
+        field: 'documentNumber',
+        header: labels.documentNumber,
+        type: ColumnFilterType.NUMERIC,
+        columnType: TableColumnType.NUMERIC,
+      },
+      {
+        field: 'income',
+        header: labels.income,
+        type: ColumnFilterType.NUMERIC,
+        columnType: TableColumnType.NUMERIC,
+      },
+      {
+        field: 'expense',
+        header: labels.expense,
+        type: ColumnFilterType.NUMERIC,
+        columnType: TableColumnType.NUMERIC,
+      },
+      {
+        field: 'date',
+        header: labels.date,
+        type: ColumnFilterType.DATE,
+        columnType: TableColumnType.DATE,
+        format: 'dd/MM/yyyy'
+      }
+    ]
+  }
 }
