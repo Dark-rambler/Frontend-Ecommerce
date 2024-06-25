@@ -29,4 +29,9 @@ export class ReportsService extends HttpService<Report>{
     .pipe(catchError(this.handleError));
   }
 
+  public transactionMonthlySummary( startDate:Date, endDate:Date): Observable<Report> {
+    return this.http.get<Report>(`${this.url}/transactionMonthlySummary?startDate=${startDate}&endDate=${endDate}`)
+    .pipe(catchError(this.handleError));
+  }
+
 }

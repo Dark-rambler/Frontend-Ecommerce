@@ -15,6 +15,8 @@ import { fromTableLazyLoadFiltersToObject } from 'src/app/core/utils/filter';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { Report } from 'src/app/core/model/report';
 import { TableColumnDefinitions } from 'src/app/core/utils/table-column-definitions';
+import { FormGroup } from '@angular/forms';
+import { FormUtils } from 'src/app/core/utils/form-groups';
 
 @Component({
   selector: 'app-table',
@@ -26,8 +28,10 @@ export class TableComponent {
   @ViewChild('filter') filter!: ElementRef;
   @Input() report: Report
   @Input() totalData: any[]
+  @Input() chartData:any
 
   public data: any = [];
+  public options: any = [];
   public messages = messages;
   public labels = labels;
   public tittles = tittles;
@@ -45,16 +49,17 @@ export class TableComponent {
   public totalRecords: number;
   public globalFilter: string;
   public columnFilterType = ColumnFilterType
+  public formFilter: FormGroup;
   private searchSubject = new Subject<string>();
 
   constructor(
-    private expensesService: ReportsService,
+    private reportsService: ReportsService,
     private helpersService: HelpersService,
     public filterService: FilterService
   ) { }
 
   ngOnInit() {
-    this.expensesService.triggerTable.emit(this);
+    this.reportsService.triggerTable.emit(this);
     this.initializeColumnInformation();
     this.initializeDefaultVariables();
     this.initializeDebounceSearch();
@@ -85,14 +90,14 @@ export class TableComponent {
 
   public filterByDateAndBudget()
   {
-    this.pageable = new Pageable();
-    this.pageable.page = 0;
-    this.pageable.size = 10;
-    this.loadProgrammaticStructures
+    this.reportsService.setFilteredData(this.formFilter.value);
+    // this.pageable = new Pageable();
+    // this.pageable.page = 0;
+    // this.pageable.size = 10;
+    // this.loadProgrammaticStructures
   }
 
   public getAmount(value :any) {
-    console.log(value);
 
   }
   // private createGrid(filters?: any) {
@@ -112,6 +117,47 @@ export class TableComponent {
     this.expense = new Expense();
     this.pageable = new Pageable();
     this.firstPage = 0;
+    this.formFilter= FormUtils.getDefaultFormFilter();
+
+    this.options = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.8,
+      plugins: {
+          legend: {
+              labels: {
+                  color: 'textColor'
+              }
+          }
+      },
+      scales: {
+          x: {
+              ticks: {
+                  color: 'textColorSecondary',
+                  font: {
+                      weight: 500
+                  }
+              },
+              grid: {
+                  color: 'surfaceBorder',
+                  drawBorder: false
+              }
+          },
+          y: {
+              ticks: {
+                  color: 'textColorSecondary'
+              },
+              grid: {
+                  color: 'surfaceBorder',
+                  drawBorder: false
+              }
+          }
+
+      }
+  }
+
+
+
+
   }
 
   public onGlobalFilter( table: any,event: any) {
@@ -129,7 +175,7 @@ export class TableComponent {
   }
 
   public sendSelectedProgrammaticStructure(ProgrammaticStructure: Report) {
-    this.expensesService.setSelectedData(ProgrammaticStructure);
+    this.reportsService.setSelectedData(ProgrammaticStructure);
   }
 
   public onSearch() {
@@ -143,7 +189,7 @@ export class TableComponent {
   }
 
   public reload() {
-    this.expensesService.setFilteredData(new Report());
+    this.reportsService.setFilteredData(new Report());
   }
 
   public filterColumns(event: any) {

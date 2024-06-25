@@ -60,7 +60,6 @@ export class TableComponent {
   }
 
   public getAmount(value :any) {
-    console.log(value);
 
   }
 

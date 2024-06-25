@@ -12,6 +12,7 @@ export const tittles = {
   balanceManagement: 'Balances de Gestión ',
   create: 'Crear',
   edit: 'Editar',
+  graphicComparative: ' Gráfico Comparativo',
 };
 
 export const labels: any = {
