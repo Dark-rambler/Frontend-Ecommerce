@@ -10,6 +10,7 @@ import { HelpersService } from 'src/app/core/services/helpers.service';
 import { FormUtils } from 'src/app/core/utils/form-groups';
 import { catchError, of, tap } from 'rxjs';
 import { DocumentType } from 'src/app/core/model/document-type';
+import { toYMDdateFormat } from 'src/app/core/utils/date-formats';
 
 @Component({
   selector: 'app-modal-forms',
@@ -41,7 +42,7 @@ export class ModalFormsComponent {
     this.waitForPSGroupSelection();
     this.incomesService.trigger.emit(this);
     this.registerTableComponentListener();
-    this.formPSGroups = FormUtils.getDefaultDocumentTypeFormGroup();
+    this.formPSGroups = FormUtils.getDefaultIncomeFormGroup();
   }
 
   public openCreate() {
@@ -78,12 +79,18 @@ export class ModalFormsComponent {
   public save() {
     this.submitted = true;
     if (this.formPSGroups.valid) {
+      this.formatDateBeforeSubmit();
+
       this.expense.id
         ? this.submit('update', this.expense.id)
         : this.submit('create');
     }
   }
-
+  private formatDateBeforeSubmit() {
+    this.formPSGroups.get('date')?.setValue(
+      new Date(toYMDdateFormat(this.formPSGroups.get('date')?.value))
+    );
+  }
   private submit(action: 'create' | 'update', expenseId?: number): void {
 
     let data: Income = {
@@ -117,7 +124,7 @@ export class ModalFormsComponent {
   }
 
   private reset(): void {
-    this.formPSGroups = FormUtils.getDefaultExpenseFormGroup();
+    this.formPSGroups = FormUtils.getDefaultIncomeFormGroup();
     this.expense = new Income();
   }
 

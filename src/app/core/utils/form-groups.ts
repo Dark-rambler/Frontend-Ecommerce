@@ -44,4 +44,10 @@ export class FormUtils {
     })
   }
 
+  static getDefaultFormFilter():FormGroup{
+    return new FormGroup({
+      dateRange: new FormControl(''),
+    })
+  }
+
 }

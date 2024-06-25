@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   private menuItems: Object = [
     { label: 'Egresos', icon: 'pi pi-fw pi-home', routerLink: '/expenses' },
     { label: 'Ingresos', icon: 'pi pi-fw pi-shopping-cart', routerLink: '/incomes' },
-    { label: 'Reportes', icon: 'pi pi-fw pi-cog', routerLink: '/store-mannager' },
+    { label: 'Reportes', icon: 'pi pi-fw pi-cog', routerLink: '/reports' },
     { label: 'Tipos de documentos', icon: 'pi pi-fw pi-cog', routerLink: '/document-types'}
   ];
 

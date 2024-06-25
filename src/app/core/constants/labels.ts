@@ -9,13 +9,16 @@ export const tittles = {
   InfoProduct: 'Información del Producto',
   expenseManagement: 'Gestión de Gastos',
   incomeManagement: 'Gestión de Ingresos',
+  balanceManagement: 'Balances de Gestión ',
   create: 'Crear',
   edit: 'Editar',
+  graphicComparative: ' Gráfico Comparativo',
 };
 
 export const labels: any = {
   total: 'Total',
   name: 'Nombre',
+  movementType: 'Tipo de movimiento',
   socialReason: 'Razón Social',
   description: 'Descripción',
   price: 'Precio',
@@ -36,6 +39,8 @@ export const labels: any = {
   required: 'Campo requerido',
   documentType: 'Tipo de documento',
   documentNumber: 'Numero de documento',
+  income : 'Ingreso',
+  expense : 'Egreso',
 }
 
 export const buttons: any = {

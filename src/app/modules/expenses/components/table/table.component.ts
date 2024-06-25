@@ -96,7 +96,6 @@ export class TableComponent {
   }
 
   public getAmount(value :any) {
-    console.log(value);
 
   }
   // private createGrid(filters?: any) {
@@ -178,7 +177,6 @@ export class TableComponent {
     });
   }
   private getTotalAmount() {
-    console.log(this.data);
   }
 
 }
