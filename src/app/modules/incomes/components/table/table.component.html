@@ -1,0 +1,194 @@
+<p-toolbar class="option-menu">
+  <ng-template pTemplate="left">
+    <h5>{{ tittles.incomeManagement }}</h5>
+  </ng-template>
+  <ng-template pTemplate="right">
+    <div [formGroup]="">
+
+      <p-calendar
+        class="w-2"
+        class="m-1"
+        (onSelect)="onDateRangeSelected($event)"
+        [readonlyInput]="true"
+        [showIcon]="true"
+        [showClear]="false"
+        selectionMode="range"
+        placeholder="Seleccione un rango de tiempo"
+        dateFormat="dd/mm/yy"
+      >
+      </p-calendar>
+      <button
+        pButton
+        type="button"
+        (click)="filterByDateAndBudget()"
+        icon="pi pi-filter-fill"
+        class="p-button-outlined p-button-secondary mx-1"
+        [pTooltip]="buttons.filter"
+        tooltipPosition="top"
+      ></button>
+    </div>
+    <div class="flex mt-1">
+      <button
+        pButton
+        pRipple
+        class="p-button-outlined p-button-secondary mx-2"
+        icon="pi pi-filter-slash"
+        (click)="clear( dt1)"
+        [pTooltip]="buttons.clear"
+        tooltipPosition="top"
+      ></button>
+
+      <div class="text-right">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            #filter
+            id="search"
+            (input)="onSearch()"
+            [(ngModel)]="globalFilter"
+            placeholder="Buscar en la vista actual"
+            class="w-full"
+          />
+        </span>
+      </div>
+
+      <button
+        pButton
+        pRipple
+        class="p-button-outlined p-button-secondary ml-2"
+        icon="pi pi-sync"
+        (click)="reload()"
+        [pTooltip]="buttons.reload"
+        tooltipPosition="top"
+      ></button>
+    </div>
+  </ng-template>
+</p-toolbar>
+<p-table
+  #dt1
+  [value]="data"
+  dataKey="id"
+  [resizableColumns]="true"
+  selectionMode="single"
+  [rows]="10"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[5, 10, 15]"
+  [rowHover]="true"
+  styleClass="p-datatable-sm p-datatable-gridlines"
+  [paginator]="true"
+  [globalFilterFields]="columnsToShow"
+  responsiveLayout="scroll"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [(first)]="firstPage"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  [reorderableColumns]="true"
+  [columns]="columns"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th
+        *ngFor="let col of columns"
+        pResizableColumn
+        pReorderableColumn
+        [pSortableColumn]="col.field"
+        [hidden]="!columnsToShow.includes(col.field)"
+      >
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+        <ng-container [ngSwitch]="col.type">
+          <ng-template [ngSwitchCase]="columnFilterType.NUMERIC">
+            <p-columnFilter
+              [type]="col.type"
+              [field]="col.field"
+              locale="es-Us"
+              display="menu"
+              mode="decimal"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="6"
+              class="ml-2"
+              matchMode="equals"
+              [showOperator]="false"
+              [showAddButton]="false"
+              [showMatchModes]="false">
+            </p-columnFilter>
+          </ng-template>
+          <ng-template [ngSwitchCase]="columnFilterType.TEXT">
+            <p-columnFilter
+              [type]="col.type"
+              [field]="col.field"
+              display="menu"
+              class="ml-2"
+              matchMode="contains"
+              [showOperator]="false"
+              [showAddButton]="false"
+              [showMatchModes]="false">
+            </p-columnFilter>
+          </ng-template>
+          <ng-template [ngSwitchCase]="columnFilterType.DATE">
+            <p-columnFilter
+              [type]="col.type"
+              [field]="col.field"
+              display="menu"
+              [showMatchModes]="false"
+              [showApplyButton]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+
+            >
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+              >
+                <!-- <p-calendar
+                  #calendar
+                  [ngModel]="value"
+                  (onSelect)="filter(formateDate(calendar.value))"
+                  dateFormat="dd/mm/yy"
+                ></p-calendar> -->
+              </ng-template>
+            </p-columnFilter>
+          </ng-template>
+        </ng-container>
+
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <tr>
+      <td>
+        Total Ingresos
+      </td>
+      <td colspan="8" class="text-right pr-4" >
+        {{ totalAmount }}	Bs
+      </td>
+    </tr>
+  </ng-template>
+
+
+  <ng-template pTemplate="body" let-budgetAuthorization rowIndex="rowIndex">
+    <tr [pSelectableRow]="budgetAuthorization">
+      <td
+        *ngFor="let col of columns"
+        [hidden]="!columnsToShow.includes(col.field)"
+      >
+      {{
+       budgetAuthorization[col.field]
+      }}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="8">{{ messages.emptyMessage }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="loadingbody">
+    <tr>
+      <td colspan="8">{{ messages.loadingRegisters }}</td>
+    </tr>
+  </ng-template>
+</p-table>

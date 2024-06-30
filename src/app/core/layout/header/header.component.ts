@@ -12,9 +12,14 @@ import { PrimeModule } from 'src/app/prime.module';
 })
 export class HeaderComponent implements OnInit {
   public items: any;
-  private menuItems: Object = [ { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: '/home' }, { label: 'Store', icon: 'pi pi-fw pi-shopping-cart', routerLink: '/store' }, { label: 'Store Mannager', icon: 'pi pi-fw pi-cog', routerLink: '/store-mannager' }];
+  private menuItems: Object = [
+    { label: 'Egresos', icon: 'pi pi-fw pi-home', routerLink: '/expenses' },
+    { label: 'Ingresos', icon: 'pi pi-fw pi-shopping-cart', routerLink: '/incomes' },
+    { label: 'Reportes', icon: 'pi pi-fw pi-cog', routerLink: '/reports' },
+    { label: 'Tipos de documentos', icon: 'pi pi-fw pi-cog', routerLink: '/document-types'}
+  ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   public ngOnInit(): void {
     this.items = this.menuItems;

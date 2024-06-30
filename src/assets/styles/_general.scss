@@ -1,8 +1,6 @@
+$gutter: 1rem;
+
+@import "../Layout/customStyles/calendar.scss";
+@import "../Layout/customStyles/layout.scss";
 
 
-.layout-main{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0 90px;
-}
