@@ -1,3 +1,5 @@
+import { filter } from "rxjs";
+
 export const tittles = {
   store: 'Store',
   storeMannager: 'Gestion de Productos',
@@ -5,10 +7,19 @@ export const tittles = {
   UpdateProduct: 'Actualizar Producto',
   DeleteProduct: 'Eliminar Producto',
   InfoProduct: 'Información del Producto',
+  expenseManagement: 'Gestión de Gastos',
+  incomeManagement: 'Gestión de Ingresos',
+  balanceManagement: 'Balances de Gestión ',
+  create: 'Crear',
+  edit: 'Editar',
+  graphicComparative: ' Gráfico Comparativo',
 };
 
 export const labels: any = {
+  total: 'Total',
   name: 'Nombre',
+  movementType: 'Tipo de movimiento',
+  socialReason: 'Razón Social',
   description: 'Descripción',
   price: 'Precio',
   category: 'Categoria',
@@ -23,9 +34,13 @@ export const labels: any = {
   export: 'Exportar',
   reload: 'Actualizar',
   addToInventary: 'Agregar al inventario',
-
-
+  amount: 'Monto',
+  date: 'Fecha',
   required: 'Campo requerido',
+  documentType: 'Tipo de documento',
+  documentNumber: 'Numero de documento',
+  income : 'Ingreso',
+  expense : 'Egreso',
 }
 
 export const buttons: any = {
@@ -39,6 +54,7 @@ export const buttons: any = {
   export: 'Exportar',
   reload: 'Actualizar',
   search: 'Buscar',
+  filter: 'Filtrar',
   expand: 'Mas información'
 }
 
@@ -50,4 +66,12 @@ export const tooltip: any = {
   clear: 'Limpiar',
   export: 'Exportar',
   reload: 'Actualizar',
+}
+
+
+export const headers = {
+  expenses: 'Egresos',
+  income: 'Ingresos',
+  reports: 'Reportes',
+  documentTypes: 'Tipos de Documentos',
 }

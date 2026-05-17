@@ -2,14 +2,24 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [{
-  path: '', redirectTo: 'store', pathMatch: 'full'
+  path: '', redirectTo: 'expenses', pathMatch: 'full'
 },
 {
-  path: 'store',
-  loadComponent: () => import('./modules/store/store.component')},
+  path: 'expenses',
+  loadComponent: () => import('./modules/expenses/expenses.component')
+},
 {
-  path: 'store-mannager',
-  loadComponent: () => import('./modules/store-mannager/store-mannager.component')},
+  path: 'document-types',
+  loadComponent: () => import('./modules/document-types/document-types.component')
+},
+{
+  path : 'incomes',
+  loadComponent: () => import('./modules/incomes/incomes.component')
+},
+{
+  path: 'reports',
+  loadComponent: () => import('./modules/reports/reports.component')
+},
 ];
 
 @NgModule({
